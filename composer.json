@@ -31,14 +31,14 @@
             "email": "adinancenci@protonmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
             "WishgranterProject\\MusicRadar\\": "src/"
         }
     },
     "require": {
-        "wishgranter-project/music-probe": "*"
+        "wishgranter-project/music-probe": "^1.0"
     },
     "suggest": {
         "wishgranter-project/youtube-probe": "Probe to search on YouTube",
