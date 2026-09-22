@@ -9,6 +9,7 @@ use WishgranterProject\MusicRadar\Sorting\Criteria\CriteriaInterface;
 use WishgranterProject\MusicRadar\Sorting\Criteria\TitleCriteria;
 use WishgranterProject\MusicRadar\Sorting\Criteria\SoundtrackCriteria;
 use WishgranterProject\MusicRadar\Sorting\Criteria\ArtistCriteria;
+use WishgranterProject\MusicRadar\Sorting\Criteria\ArtistFeaturedCriteria;
 use WishgranterProject\MusicRadar\Sorting\Criteria\UndesirableCriteria;
 use WishgranterProject\MusicRadar\Sorting\Criteria\LeftOverCriteria;
 use WishgranterProject\MusicRadar\Sorting\Criteria\LiveEventDateCriteria;
@@ -83,6 +84,7 @@ class Search implements SearchInterface
         $this
             ->addCriteria(new TitleCriteria($excelent))
             ->addCriteria(new ArtistCriteria($excelent))
+            ->addCriteria(new ArtistFeaturedCriteria($excelent))
             ->addCriteria(new SoundtrackCriteria($excelent));
 
         //------------------------------------

@@ -45,6 +45,7 @@ $probe->addProbe($youTube, 1);
 
 $title      = $_GET['title'] ?? '';
 $artist     = $_GET['artist'] ?? '';
+$featuring  = $_GET['featuring'] ?? '';
 $genre      = $_GET['genre'] ?? '';
 $soundtrack = $_GET['soundtrack'] ?? '';
 $cover      = $_GET['cover'] ?? '';
@@ -52,6 +53,7 @@ $cover      = $_GET['cover'] ?? '';
 $description = Description::createFromArray([
     'title'      => $title,
     'artist'     => $artist,
+    'featuring'  => $featuring,
     'genre'      => $genre,
     'soundtrack' => $soundtrack,
     'cover'      => $cover
@@ -73,6 +75,7 @@ require 'head.html';
 <form action="">
     <input type="search" name="title" placeholder="Title" title="Title" value="<?php echo $title;?>" />
     <input type="search" name="artist" placeholder="Artist" title="Artist" value="<?php echo $artist;?>" />
+    <input type="search" name="featuring" placeholder="Featuring" title="Featuring" value="<?php echo $featuring;?>" />
     <input type="search" name="genre" placeholder="Genre" title="Genre" value="<?php echo $genre;?>" />
     <input type="search" name="soundtrack" placeholder="Soundtrack" title="Soundtrack" value="<?php echo $soundtrack;?>" />
     <input type="search" name="cover" placeholder="Cover" title="Cover" value="<?php echo $cover;?>" />
@@ -116,6 +119,7 @@ if (empty($title) || empty($artist)) {
     <li><a href="?genre=Power+Metal&artist=Space+Cadets&title=The+Human+Condition">The Human Condition - Space Cadets</a></li>
     <li><a href="?genre=Power+Metal&artist=Hysterica&title=Breaking+the+walls">Breaking the walls - Hysterica</a></li>
     <li><a href="?genre=Metal&artist=Davester2296&title=Painful+Dreams&cover=Robert+Prince&soundtrack=D64D2">Painful Dreams - Davester2296</a></li>
+    <li><a href="?artist=Gotye&featuring=The+Basics&title=Somebody+That+I+Used+To+Know">Somebody That I Used To Know - Gotye & The Basics</a></li>
 </ul>
 <?php
 die();

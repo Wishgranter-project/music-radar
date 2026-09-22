@@ -10,9 +10,9 @@ use WishgranterProject\MusicRadar\Helper\English;
 /**
  * The resource scores:
  *  0 if the description specifies no artist to begin with.
- * +2 if the artist can be found in the resource's artist description.
+ * +2 if the artist can be found in the resource's artist property.
  * +1 if the artist can be found in the resource's other properties.
- * -1 if the artist cannot be found.
+ * -2 if the artist cannot be found.
  */
 class ArtistCriteria extends BaseCriteria implements CriteriaInterface
 {
@@ -29,20 +29,17 @@ class ArtistCriteria extends BaseCriteria implements CriteriaInterface
      */
     protected function getPoints(ResourceInterface $forResource, DescriptionInterface $basedOnDescription): int
     {
-        // No artist in the description, skip.
-        if (!$basedOnDescription->getArtist()) {
+        $artist = $this->getRelevantName($basedOnDescription);
+        // No artist in the description, skip it.
+        if (!$artist) {
             return 0;
         }
 
-        $artist = $basedOnDescription->getArtist();
         $points = $this->checkForArtist($forResource, $artist);
 
         // Let's be a bit lenient with the artist's name ...
-        if ($points < 0) {
-            $variation = $this->unpluralize($artist);
-            $points = $artist != $variation
-                ? $this->checkForArtist($forResource, $variation)
-                : $points;
+        if ($points < 0 && ($variation = $this->getVariation($artist))) {
+            $points = $this->checkForArtist($forResource, $variation);
         }
 
         return $points;
@@ -61,18 +58,37 @@ class ArtistCriteria extends BaseCriteria implements CriteriaInterface
      */
     protected function checkForArtist(ResourceInterface $forResource, mixed $artist): int
     {
-        if ($forResource->getArtist()) {
-            // Resource has an artist!
-            return Text::substrIntersect($forResource->getArtist(), $artist)
-                ?  2
-                : -2;
+        if ($forResource->getArtist() && Text::substrIntersect($forResource->getArtist(), $artist)) {
+            return 2;
         }
 
         // Title or description will do...
-        return Text::substrIntersect($forResource->getTitle(), $artist) ||
-               Text::substrIntersect($forResource->getDescription(), $artist)
-            ?  1
-            : -1;
+        if (
+            Text::substrIntersect($forResource->getTitle(), $artist) ||
+            Text::substrIntersect($forResource->getDescription(), $artist)
+        ) {
+            return 1;
+        }
+
+        return -2;
+    }
+
+    /**
+     * Given a name, returns a unpluralized variation.
+     *
+     * @param string|array $artist
+     *   A name or array of names.
+     *
+     * @return string|array|null
+     *   Returns the unpluralized variation, or null if it is unable to
+     *   generate the variation.
+     */
+    protected function getVariation($artist)
+    {
+        $variation = $this->unpluralize($artist);
+        return $variation == $artist
+            ? null
+            : $variation;
     }
 
     /**
@@ -95,5 +111,22 @@ class ArtistCriteria extends BaseCriteria implements CriteriaInterface
         }
 
         return $strings;
+    }
+
+    /**
+     * Given a description, returns the relevant name(s) to our criteria.
+     *
+     * Not gonna lie, this method only exists so it can be overwritten in child
+     * classes.
+     *
+     * @param WishgranterProject\MusicProbe\DescriptionInterface $description
+     *   The description of the music.
+     *
+     * @return string|array
+     *   The relevante name(s).
+     */
+    protected function getRelevantName(DescriptionInterface $description)
+    {
+        return $description->getArtist();
     }
 }

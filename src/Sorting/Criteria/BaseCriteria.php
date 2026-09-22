@@ -7,7 +7,7 @@ use WishgranterProject\MusicProbe\ResourceInterface;
 use WishgranterProject\MusicRadar\Sorting\ScoreInterface;
 use WishgranterProject\MusicRadar\Sorting\Score;
 
-abstract class BaseCriteria
+abstract class BaseCriteria implements CriteriaInterface
 {
     /**
      * Constructor.
@@ -18,6 +18,14 @@ abstract class BaseCriteria
      */
     public function __construct(protected int $weight = 1)
     {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getId(): string
+    {
+        return 'criteria:abstract';
     }
 
     /**
