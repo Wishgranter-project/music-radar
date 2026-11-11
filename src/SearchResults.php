@@ -74,7 +74,7 @@ class SearchResults implements SearchResultsInterface
     protected function getAverage(): float
     {
         $total = $this->getTotal();
-        $count = 0;
+        $count = $this->count();
 
         return $count
             ? $total / $count
