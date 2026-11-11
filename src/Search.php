@@ -229,7 +229,7 @@ class Search implements SearchInterface
             $total = $result->getRelevance()?->getTotal() ?: 0;
             $carry += $total >= $minScore ? 1 : 0;
             return $carry;
-        });
+        }, 0);
     }
 
     /**
