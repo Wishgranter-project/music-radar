@@ -226,7 +226,8 @@ class Search implements SearchInterface
     protected function countResultsScoringAtLeast(SearchResultsInterface $searchResults, int $minScore): int
     {
         return array_reduce($searchResults->getItems(), function ($carry, $result) use ($minScore) {
-            $carry += $result->getRelevance()->getTotal() >= $minScore ? 1 : 0;
+            $total = $result->getRelevance()?->getTotal() ?: 0;
+            $carry += $total >= $minScore ? 1 : 0;
             return $carry;
         });
     }
