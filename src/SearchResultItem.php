@@ -60,7 +60,9 @@ class SearchResultItem
     {
         return [
             'resource'  => $this->resource->toArray(),
-            'relevance' => $this->relevance->toArray(),
+            'relevance' => $this->relevance
+                ? $this->relevance->toArray()
+                : null,
         ];
     }
 }
