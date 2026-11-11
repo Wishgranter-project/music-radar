@@ -247,7 +247,9 @@ class Search implements SearchInterface
 
         $items = $searchResults->getItems();
         foreach ($items as $item) {
-            $key = $item->getResource()->getSourceId() . ':' . $item->getResource()->getId();
+            $resource = $item->getResource();
+            $id = $resource->getId() ?: $resource->getSrc() ?: $resource->getHref() ?: $resource->getTitle();
+            $key = $item->getResource()->getSourceId() . ':' . $id;
             if (isset($uniqueArray[$key])) {
                 continue;
             }
