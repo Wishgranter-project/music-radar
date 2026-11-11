@@ -60,7 +60,7 @@ class SearchResults implements SearchResultsInterface
     protected function getTotal(): int
     {
         return array_reduce($this->items, function ($carry, $result) {
-            $carry += $result->getRelevance()->getTotal();
+            $carry += $result?->getRelevance()?->getTotal() ?: 0;
             return $carry;
         }, 0);
     }
