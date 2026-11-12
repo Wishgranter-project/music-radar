@@ -30,14 +30,14 @@ class Search implements SearchInterface
      *   The probes we'll use to find our music.
      * @param array $criteria
      *   Criteria to judge how closely each resource matches the description.
-     * @param int $averaging
-     *   The average relevance score we are aiming for.
+     * @param int $minimumScore
+     *   The minimum relevance score we are aiming for.
      */
     public function __construct(
         protected DescriptionInterface $description,
         protected array $withProbes = [],
         protected array $criteria = [],
-        protected int $averaging = 20,
+        protected int $minimumScore = 20,
     ) {
     }
 
@@ -62,9 +62,9 @@ class Search implements SearchInterface
     /**
      * {@inheritdoc}
      */
-    public function setAverageRelevance(int $points): SearchInterface
+    public function setMinimumRelevanceScore(int $points): SearchInterface
     {
-        $this->averaging = $points;
+        $this->minimumScore = $points;
         return $this;
     }
 
@@ -150,8 +150,8 @@ class Search implements SearchInterface
                 continue;
             }
 
-            // 1 result scoring the avarege is good enough, let's stop here.
-            if ($this->countResultsScoringAtLeast($findings, $this->averaging) >= 1) {
+            // 1 result scoring the minimum is good enough, let's stop here.
+            if ($this->countResultsScoringAtLeast($findings, $this->minimumScore) >= 1) {
                 break;
             }
 

@@ -36,7 +36,7 @@ interface SearchInterface
     public function addCriteria(CriteriaInterface $criteria): SearchInterface;
 
     /**
-     * Sets the average relevance we are aiming for in search results.
+     * Sets the minimum relevance score we are aiming for in search results.
      *
      * @param int $points
      *   The average punctuation.
@@ -44,7 +44,7 @@ interface SearchInterface
      * @return self
      *   Returns itself.
      */
-    public function setAverageRelevance(int $points): SearchInterface;
+    public function setMinimumRelevanceScore(int $points): SearchInterface;
 
     /**
      * Deploy the probes and returns search results.
