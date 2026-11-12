@@ -31,10 +31,12 @@ class SoundtrackCriteria extends BaseCriteria implements CriteriaInterface
             return 0;
         }
 
-        foreach (['title', 'description'] as $property) {
+        foreach (['getTitle', 'getDescription'] as $property) {
+            $text = call_user_func([$forResource, $property]);
+
             if (
-                $forResource->{$property} &&
-                Text::substrCountArray($forResource->{$property}, $basedOnDescription->getSoundtrack())
+                $text &&
+                Text::substrCountArray($text, $basedOnDescription->getSoundtrack())
             ) {
                 return 1;
             }
