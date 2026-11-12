@@ -69,7 +69,7 @@ class Search implements SearchInterface
     }
 
     /**
-     * A built-in pre set of criteria to sort resources.
+     * Adds a built-in, opinionated pre-set of criteria to sort resources.
      *
      * @return self
      *   Returns itself.
