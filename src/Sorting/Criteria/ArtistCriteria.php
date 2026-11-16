@@ -123,7 +123,7 @@ class ArtistCriteria extends BaseCriteria implements CriteriaInterface
      *   The description of the music.
      *
      * @return string|array
-     *   The relevante name(s).
+     *   The relevant name(s).
      */
     protected function getRelevantName(DescriptionInterface $description)
     {

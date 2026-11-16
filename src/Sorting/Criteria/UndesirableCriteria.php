@@ -43,7 +43,7 @@ class UndesirableCriteria extends BaseCriteria implements CriteriaInterface
     {
         $score = 0;
 
-        // If the term actually makes part of of the description, counting it would be contraproductive.
+        // If the term actually makes part of of the description, counting it would be counterproductive.
         if ($this->isTermInDescription($this->term, $basedOnDescription)) {
             return 0;
         }

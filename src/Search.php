@@ -91,13 +91,13 @@ class Search implements SearchInterface
         // Weight.
         $couldDoWithout = -1;
         $absolutelyNot = -40;
-        $excelent = 10;
+        $excellent = 10;
 
         $this
-            ->addCriteria(new TitleCriteria($excelent))
-            ->addCriteria(new ArtistCriteria($excelent))
-            ->addCriteria(new ArtistFeaturedCriteria($excelent))
-            ->addCriteria(new SoundtrackCriteria($excelent));
+            ->addCriteria(new TitleCriteria($excellent))
+            ->addCriteria(new ArtistCriteria($excellent))
+            ->addCriteria(new ArtistFeaturedCriteria($excellent))
+            ->addCriteria(new SoundtrackCriteria($excellent));
 
         //------------------------------------
 

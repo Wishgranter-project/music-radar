@@ -170,7 +170,7 @@ references point at the state of the code at the time of writing.
   `README.md` says "Currenty only youtube" although `local-files-probe` is
   supported. Fix that and the typos below.
 
-- [ ] **Fix typos in code/docs.**
+- [X] **Fix typos in code/docs.**
   - `src/Search.php:82` `$excelent` -> `$excellent`
   - `src/Search.php:153` `avarege` -> `average`
   - `src/Sorting/Criteria/ArtistCriteria.php:126` `relevante` -> `relevant`
