@@ -56,7 +56,7 @@ class SearchResultItem
      * @return array
      *   The object as an array.
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'resource'  => $this->resource->toArray(),
