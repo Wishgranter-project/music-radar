@@ -114,17 +114,17 @@ references point at the state of the code at the time of writing.
 
 ## Security / repository hygiene
 
-- [ ] **A private key is committed to the repository.**
+- [X] **A private key is committed to the repository.**
   `.ddev/traefik/certs/aether-music.key` (with its `.crt`) is tracked. It is a
   local `mkcert` dev key, but private keys should never be committed. Remove both
   files from git (`git rm --cached`) and let DDEV regenerate them.
 
-- [ ] **Stale `aether-music` DDEV artifacts are tracked.**
+- [X] **Stale `aether-music` DDEV artifacts are tracked.**
   `.ddev/traefik/config/aether-music.yaml` and the certs above use the old
   project name; current DDEV generates `music-radar.*` files that are correctly
   ignored. Remove the leftovers.
 
-- [ ] **`examples/.youtube-api-key` handling is fine but fragile.**
+- [X] **`examples/.youtube-api-key` handling is fine but fragile.**
   It is gitignored, good. Keep it that way and never echo its contents in logs.
 
 ---
