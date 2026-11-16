@@ -74,7 +74,7 @@ references point at the state of the code at the time of writing.
   `src/Radar.php:7` imports `SearchInterface` although `Radar` is already in
   `WishgranterProject\MusicRadar`.
 
-- [ ] **`UndesirableCriteria` does not call `parent::__construct()`** while
+- [X] **`UndesirableCriteria` does not call `parent::__construct()`** while
   `LeftOverCriteria` does (redundantly). Both re-declare the promoted `$weight`
   property. Pick one pattern and use it consistently; as written, future
   constructor logic in `BaseCriteria` would silently not run.

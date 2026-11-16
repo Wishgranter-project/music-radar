@@ -25,6 +25,7 @@ class UndesirableCriteria extends BaseCriteria implements CriteriaInterface
         protected int $weight = -1,
         protected string $term = '',
     ) {
+        parent::__construct($weight);
     }
 
     /**
