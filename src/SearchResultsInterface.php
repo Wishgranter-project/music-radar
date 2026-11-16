@@ -13,14 +13,6 @@ interface SearchResultsInterface extends \Iterator
     public function getItems(): array;
 
     /**
-     * Returns the number of results.
-     *
-     * @return int
-     *   Number of search results.
-     */
-    public function count(): int;
-
-    /**
      * Returns an array representation of the object.
      *
      * Useful for data transfer.

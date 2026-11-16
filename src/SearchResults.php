@@ -2,7 +2,7 @@
 
 namespace WishgranterProject\MusicRadar;
 
-class SearchResults implements SearchResultsInterface
+class SearchResults implements SearchResultsInterface, \Countable
 {
     /**
      * Constructor.
