@@ -3,9 +3,6 @@
 namespace WishgranterProject\MusicRadar\Sorting\Criteria;
 
 use WishgranterProject\MusicProbe\DescriptionInterface;
-use WishgranterProject\MusicProbe\ResourceInterface;
-use WishgranterProject\MusicProbe\Helper\Text;
-use WishgranterProject\MusicRadar\Helper\English;
 
 /**
  * The resource scores:

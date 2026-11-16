@@ -35,7 +35,7 @@ references point at the state of the code at the time of writing.
   implements `__get()`, but `ResourceInterface` only guarantees getters. Use
   `getTitle()` / `getDescription()` explicitly.
 
-- [ ] **`English::singular()` over-strips words.**
+- [X] **`English::singular()` over-strips words.**
   `src/Helper/English.php:34-49` applies naive suffix rules to every word.
   Verified: `"Glass Animals"` becomes `"Glas Animal"` and `"The Beatles"`
   becomes `"The Beatl"`. This feeds `ArtistCriteria`'s "lenient" fallback
@@ -137,7 +137,6 @@ references point at the state of the code at the time of writing.
   - `SearchResultItem::toArray()` with and without relevance.
   - `Search::find()` merging, duplicate removal, early exit and sorting.
   - Each `Sorting/Criteria/*` with matching / non-matching / empty descriptions.
-  - `English::unpluralize()` including false positives.
 
 - [ ] **Add PHPUnit and a `composer test` script.**
   Add `require-dev: phpunit/phpunit`, `autoload-dev`, `phpunit.xml.dist` and a
