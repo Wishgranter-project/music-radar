@@ -92,7 +92,8 @@ class Search implements SearchInterface
         $indifferentTowards = [
             'lyrics',
             'official lyric video',
-            'official music video'
+            'official music video',
+            'official video',
         ];
 
         $this
