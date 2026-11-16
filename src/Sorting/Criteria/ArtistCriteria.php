@@ -51,9 +51,9 @@ class ArtistCriteria extends BaseCriteria implements CriteriaInterface
     /**
      * Checks if the artist's name is present in the resource.
      *
-     * @param WishgranterProject\MusicProbe\ResourceInterface
+     * @param WishgranterProject\MusicProbe\ResourceInterface $forResource
      *   The playable resource to check.
-     * @param string|array $artist
+     * @param string|string[] $artist
      *   The artist's name.
      *
      * @return int
@@ -61,14 +61,16 @@ class ArtistCriteria extends BaseCriteria implements CriteriaInterface
      */
     protected function checkForArtist(ResourceInterface $forResource, mixed $artist): int
     {
-        if ($forResource->getArtist() && Text::substrIntersect($forResource->getArtist(), $artist)) {
-            return 2;
+        foreach ($forResource->getArtist() as $art) {
+            if ($this->containsText($forResource->getArtist(), $art)) {
+                return 2;
+            }
         }
 
         // Title or description will do...
         if (
-            Text::substrIntersect($forResource->getTitle(), $artist) ||
-            Text::substrIntersect($forResource->getDescription(), $artist)
+            $this->containsText($forResource->getTitle(), $artist) ||
+            $this->containsText($forResource->getDescription(), $artist)
         ) {
             return 1;
         }
