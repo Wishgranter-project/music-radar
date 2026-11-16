@@ -200,16 +200,10 @@ class Search implements SearchInterface
             return 0;
         }
 
-        $score1 = $result1->getRelevance()->getTotal();
-        $score2 = $result2->getRelevance()->getTotal();
+        $score1 = $result1->getRelevance()?->getTotal() ?: 0;
+        $score2 = $result2->getRelevance()?->getTotal() ?: 0;
 
-        if ($score1 == $score2) {
-            return 0;
-        }
-
-        return $score1 > $score2
-            ? -1
-            :  1;
+        return $score2 <=> $score1;
     }
 
     /**
