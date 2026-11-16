@@ -78,7 +78,19 @@ class UndesirableCriteria extends BaseCriteria implements CriteriaInterface
             return true;
         }
 
+        if ($description->getFeaturing() && Text::substrIntersect($description->getFeaturing(), $term)) {
+            return true;
+        }
+
+        if ($description->getCover() && Text::substrIntersect($description->getCover(), $term)) {
+            return true;
+        }
+
         if ($description->getSoundtrack() && Text::substrIntersect($description->getSoundtrack(), $term)) {
+            return true;
+        }
+
+        if ($description->getGenre() && Text::substrIntersect($description->getGenre(), $term)) {
             return true;
         }
 

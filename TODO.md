@@ -96,7 +96,7 @@ references point at the state of the code at the time of writing.
   `src/Sorting/Criteria/TitleCriteria.php:34` matches `"Sonne"` inside
   `"Sonnenschein"`. Consider word-boundary matching or normalisation.
 
-- [ ] **`UndesirableCriteria` ignores `featuring`, `genre` and `cover`.**
+- [X] **`UndesirableCriteria` ignores `featuring`, `genre` and `cover`.**
   `src/Sorting/Criteria/UndesirableCriteria.php:70-85` only checks title, artist
   and soundtrack when deciding whether a term is part of the description.
 
