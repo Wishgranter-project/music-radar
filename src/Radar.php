@@ -56,17 +56,13 @@ class Radar
 
     /**
      * Sorts the probes based on their priority.
+     *
+     * In ascending order.
      */
     protected function sortProbes(): void
     {
-        usort($this->probes, function ($s1, $s2) {
-            if ($s1->priority == $s2->priority) {
-                return 0;
-            }
-
-            return $s1->priority > $s2->priority
-                ? -1
-                :  1;
+        usort($this->probes, function ($p1, $p2) {
+            return $p1->priority <=> $p2->priority;
         });
     }
 }

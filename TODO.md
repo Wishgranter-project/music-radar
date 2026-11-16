@@ -63,7 +63,7 @@ references point at the state of the code at the time of writing.
 - [X] **`Radar::addProbe()` requires an explicit priority.**
   `src/Radar.php:29` could default `$priority = 0` for a friendlier API.
 
-- [ ] **`Radar::sortProbes()` is more verbose than necessary.**
+- [X] **`Radar::sortProbes()` is more verbose than necessary.**
   `src/Radar.php:60-71` can use `$s2->priority <=> $s1->priority`.
 
 - [ ] **`Radar` docblock points at the wrong namespace.**
