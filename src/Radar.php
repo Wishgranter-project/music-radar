@@ -4,7 +4,6 @@ namespace WishgranterProject\MusicRadar;
 
 use WishgranterProject\MusicProbe\ProbeInterface;
 use WishgranterProject\MusicProbe\DescriptionInterface;
-use WishgranterProject\MusicRadar\SearchInterface;
 
 class Radar
 {

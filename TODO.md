@@ -70,7 +70,7 @@ references point at the state of the code at the time of writing.
   `src/Radar.php:14` says `WishgranterProject\MusicProbe\ProbeSlot[]`; the class
   lives in `WishgranterProject\MusicRadar`.
 
-- [ ] **Redundant same-namespace import.**
+- [X] **Redundant same-namespace import.**
   `src/Radar.php:7` imports `SearchInterface` although `Radar` is already in
   `WishgranterProject\MusicRadar`.
 
