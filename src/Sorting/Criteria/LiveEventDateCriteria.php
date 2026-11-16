@@ -31,16 +31,32 @@ class LiveEventDateCriteria extends BaseCriteria implements CriteriaInterface
      */
     protected function getPoints(ResourceInterface $forResource, DescriptionInterface $basedOnDescription): int
     {
-        $datePattern  = '/(January|February|March|April|May|June|July|August|September|October|November|December)[ ,]+[\d]+(st|th|nd|rd|)(of|)[ ,]\d*/';
-        $shortPattern = '#\d+[/.]\d+[/.]\d+#';
-        if (
-            $this->dateInResource($forResource, $datePattern) ||
-            $this->dateInResource($forResource, $shortPattern)
-        ) {
-            return 1;
+        $patterns = $this->getDateRegexPatterns();
+
+        foreach ($patterns as $pattern) {
+            if ($this->dateInResource($forResource, $pattern)) {
+                return 1;
+            }
         }
 
         return 0;
+    }
+
+    /**
+     * Retrieves our list of regex patterns to identify dates.
+     *
+     * @return string[]
+     *   Array of regex patterns.
+     */
+    protected function getDateRegexPatterns()
+    {
+        return [
+            '#(January|February|March|April|May|June|July|August|September|October|November|December)#',
+            '#[\d]+(st|th|nd|rd)#',
+            '#\d+[/.]\d+[/.]\d+#',
+            '#19\d{2}#',
+            '#20\d{2}#',
+        ];
     }
 
     /**
