@@ -56,7 +56,7 @@ references point at the state of the code at the time of writing.
   but `count($results)` does not work. Consider implementing `\Countable` and
   `\IteratorAggregate` (cleaner than manual array-pointer iteration).
 
-- [ ] **`SearchResults::getTotal()` / `getAverage()` are `protected`** but are
+- [X] **`SearchResults::getTotal()` / `getAverage()` are `protected`** but are
   exposed through `toArray()`. If callers need them, make them public; otherwise
   keep them private implementation details.
 
