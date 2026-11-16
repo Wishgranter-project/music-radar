@@ -66,7 +66,7 @@ references point at the state of the code at the time of writing.
 - [X] **`Radar::sortProbes()` is more verbose than necessary.**
   `src/Radar.php:60-71` can use `$s2->priority <=> $s1->priority`.
 
-- [ ] **`Radar` docblock points at the wrong namespace.**
+- [X] **`Radar` docblock points at the wrong namespace.**
   `src/Radar.php:14` says `WishgranterProject\MusicProbe\ProbeSlot[]`; the class
   lives in `WishgranterProject\MusicRadar`.
 

@@ -11,7 +11,7 @@ class Radar
     /**
      * The probes we'll be deploying to find our music.
      *
-     * @var WishgranterProject\MusicProbe\ProbeSlot[]
+     * @var WishgranterProject\MusicRadar\ProbeSlot[]
      */
     protected array $probes = [];
 
