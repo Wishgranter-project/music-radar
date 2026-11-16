@@ -38,6 +38,7 @@
         }
     },
     "require": {
+        "php": "^8.4",
         "wishgranter-project/music-probe": "^1.0"
     },
     "suggest": {

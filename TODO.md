@@ -162,7 +162,7 @@ references point at the state of the code at the time of writing.
   examples.** `composer.json:42` — move it to `require-dev` (or make the caching
   example optional).
 
-- [ ] **Declare the PHP platform requirement.** The dependency tree already
+- [X] **Declare the PHP platform requirement.** The dependency tree already
   requires PHP `>= 8.4` (DDEV and vendor enforce it), but `composer.json` does not
   say so. Add `"php": ">=8.4"`.
 
