@@ -100,7 +100,7 @@ references point at the state of the code at the time of writing.
   `src/Sorting/Criteria/UndesirableCriteria.php:70-85` only checks title, artist
   and soundtrack when deciding whether a term is part of the description.
 
-- [ ] **`LeftOverCriteria` only subtracts title/artist/soundtrack.**
+- [X] **`LeftOverCriteria` only subtracts title/artist/soundtrack.**
   `src/Sorting/Criteria/LeftOverCriteria.php:45-57` does not strip `featuring`,
   `album`, `cover` or `genre`, so legitimate description terms can be counted as
   leftovers.

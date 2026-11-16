@@ -52,6 +52,22 @@ class LeftOverCriteria extends BaseCriteria implements CriteriaInterface
             $titleMinusDescription = str_ireplace($basedOnDescription->getArtist(), '', $titleMinusDescription);
         }
 
+        if ($basedOnDescription->getFeaturing()) {
+            $titleMinusDescription = str_ireplace($basedOnDescription->getFeaturing(), '', $titleMinusDescription);
+        }
+
+        if ($basedOnDescription->getAlbum()) {
+            $titleMinusDescription = str_ireplace($basedOnDescription->getAlbum(), '', $titleMinusDescription);
+        }
+
+        if ($basedOnDescription->getCover()) {
+            $titleMinusDescription = str_ireplace($basedOnDescription->getCover(), '', $titleMinusDescription);
+        }
+
+        if ($basedOnDescription->getGenre()) {
+            $titleMinusDescription = str_ireplace($basedOnDescription->getGenre(), '', $titleMinusDescription);
+        }
+
         if ($basedOnDescription->getSoundtrack()) {
             $titleMinusDescription = str_ireplace($basedOnDescription->getSoundtrack(), '', $titleMinusDescription);
         }
