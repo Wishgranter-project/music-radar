@@ -153,12 +153,12 @@ references point at the state of the code at the time of writing.
 
 ## Documentation and packaging
 
-- [ ] **`composer.json` lists required packages under `suggest`.**
+- [X] **`composer.json` lists required packages under `suggest`.**
   `wishgranter-project/youtube-probe` and `local-files-probe` are both in
   `require` and `suggest`. `suggest` is for optional packages only; remove them
   from one side.
 
-- [ ] **`adinan-cenci/file-cache` is a runtime requirement but only used in
+- [X] **`adinan-cenci/file-cache` is a runtime requirement but only used in
   examples.** `composer.json:42` — move it to `require-dev` (or make the caching
   example optional).
 
@@ -166,7 +166,7 @@ references point at the state of the code at the time of writing.
   requires PHP `>= 8.4` (DDEV and vendor enforce it), but `composer.json` does not
   say so. Add `"php": ">=8.4"`.
 
-- [ ] **README is stale.**
+- [X] **README is stale.**
   `README.md` says "Currenty only youtube" although `local-files-probe` is
   supported. Fix that and the typos below.
 

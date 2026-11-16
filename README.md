@@ -141,7 +141,7 @@ $resources = $search->find();
 ## Notes
 
 - **How many probes does it supports ?**  
-  Currenty only youtube, I plan to add support for soundcloud and other services in the future.
+  Currenty only YouTube and local files are supported, I plan to add support for soundcloud and other services in the future.
 
 - **Can I write my own probes ?**  
   Sure, just implement `WishgranterProject\MusicProbe\ProbeInterface`.

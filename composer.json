@@ -44,5 +44,10 @@
     "suggest": {
         "wishgranter-project/youtube-probe": "Probe to search on YouTube",
         "wishgranter-project/local-files-probe": "Probe to search around local files"
+    },
+    "require-dev": {
+        "adinan-cenci/file-cache": "^2.0",
+        "wishgranter-project/youtube-probe": "^1.0",
+        "wishgranter-project/local-files-probe": "^1.0"
     }
 }
