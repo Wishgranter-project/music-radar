@@ -92,7 +92,7 @@ references point at the state of the code at the time of writing.
   `\d+[/.]\d+[/.]\d+` matches version numbers / dotted titles, and the long
   pattern requires a trailing separator after the year. Add tests and tighten.
 
-- [ ] **`TitleCriteria` / `SoundtrackCriteria` use raw substring matching.**
+- [X] **`TitleCriteria` / `SoundtrackCriteria` use raw substring matching.**
   `src/Sorting/Criteria/TitleCriteria.php:34` matches `"Sonne"` inside
   `"Sonnenschein"`. Consider word-boundary matching or normalisation.
 

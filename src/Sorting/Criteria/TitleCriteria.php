@@ -6,7 +6,6 @@ namespace WishgranterProject\MusicRadar\Sorting\Criteria;
 
 use WishgranterProject\MusicProbe\DescriptionInterface;
 use WishgranterProject\MusicProbe\ResourceInterface;
-use WishgranterProject\MusicProbe\Helper\Text;
 
 /**
  * The resource scores:
@@ -33,7 +32,7 @@ class TitleCriteria extends BaseCriteria implements CriteriaInterface
             return 0;
         }
 
-        return Text::substrCountArray($forResource->getTitle(), $basedOnDescription->getTitle())
+        return $this->containsText($forResource->getTitle(), $basedOnDescription->getTitle())
             ?  1
             : -1;
     }
