@@ -182,11 +182,9 @@ references point at the state of the code at the time of writing.
   The bundled `music-probe` package uses it; adding it here keeps type behaviour
   consistent and surfaces coercion bugs early.
 
-- [ ] **Complete type hints on remaining public/protected methods.**
+- [X] **Complete type hints on remaining public/protected methods.**
   Examples: `SearchResultItem::toArray()` has no `: array`; `Search::mergeSearchResults()`
   has no parameter/return types and relies on `func_get_args()`.
-  `ArtistCriteria::getVariation()`, `unpluralize()` and `getRelevantName()` are
-  untyped.
 
 
 # Notes

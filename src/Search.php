@@ -273,8 +273,14 @@ class Search implements SearchInterface
 
     /**
      * Merge multiple search results into a single object.
+     *
+     * @param array|WishgranterProject\MusicRadar\SearchResultsInterface ...$args
+     *   Results to merge.
+     *
+     * @return WishgranterProject\MusicRadar\SearchResultsInterface
+     *   The results merged.
      */
-    protected function mergeSearchResults()
+    protected function mergeSearchResults($args): SearchResultsInterface
     {
         $args = func_get_args();
         $array = [];
