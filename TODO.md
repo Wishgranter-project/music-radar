@@ -110,6 +110,10 @@ references point at the state of the code at the time of writing.
   result reaches the threshold. This is intentional, but document it; it means
   result completeness depends on probe priority.
 
+- [ ] **`UndesirableCriteria::isTermInDescription()` is invoked for every Resource.**
+  And it does not even depend on the resource. Maybe move the logic to `Search`,
+  filter the terms out before the search.
+
 ---
 
 ## Security / repository hygiene
@@ -177,7 +181,7 @@ references point at the state of the code at the time of writing.
     `counterproductive`
   - `CHANGESLOG.md` filename -> `CHANGELOG.md`
 
-- [ ] **Consider `declare(strict_types=1);` in `src/`.**
+- [X] **Consider `declare(strict_types=1);` in `src/`.**
   The bundled `music-probe` package uses it; adding it here keeps type behaviour
   consistent and surfaces coercion bugs early.
 
@@ -189,6 +193,7 @@ references point at the state of the code at the time of writing.
 # Notes
 
 Overall it's a solid, pragmatic design for a small library. The layering is clean: Radar is a probe registry, Search orchestrates, SearchResults/SearchResultItem are value objects, and Sorting is a separate scoring engine. The criteria-as-pluggable-objects pattern is the right call - it's extensible, composable, and the weights make tuning approachable. Depending only on the music-probe interfaces (not concrete probes) is good dependency inversion, and probe priority + early exit is a sensible cost-saving strategy for remote APIs. The fluent API reads well.
+
 My main architectural concerns:
 Search is becoming a god object. It does orchestration, merging, de-duplication, scoring, sorting, and owns the default criteria preset ( src/Search.php:77). The preset is domain configuration, not search logic - extract it (e.g. a Criteria Preset/factory). The missing addDefaultCriteria() on the interface is a symptom of this.
 The scoring model is semantically loose. Criteria emit points on inconsistent scales (title = 1, artist = 2, undesirable = occurrence count) and weights multiply them, with negative weights used as penalties. It works, but scores are hard to reason about and hard to test. A clearer contract (e.g. normalized match contribution + explicit penalty) would age better.

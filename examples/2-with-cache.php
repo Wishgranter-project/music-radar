@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use AdinanCenci\FileCache\Cache;
 use WishgranterProject\MusicRadar\Radar;
 use WishgranterProject\MusicProbe\Description;

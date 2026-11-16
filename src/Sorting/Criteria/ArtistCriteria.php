@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WishgranterProject\MusicRadar\Sorting\Criteria;
 
 use Doctrine\Inflector\InflectorFactory;
