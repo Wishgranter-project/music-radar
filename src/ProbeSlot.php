@@ -16,7 +16,7 @@ class ProbeSlot
      */
     public function __construct(
         public readonly ProbeInterface $probe,
-        public readonly int $priority,
+        public readonly int $priority = 0,
     ) {
     }
 }

@@ -60,7 +60,7 @@ references point at the state of the code at the time of writing.
   exposed through `toArray()`. If callers need them, make them public; otherwise
   keep them private implementation details.
 
-- [ ] **`Radar::addProbe()` requires an explicit priority.**
+- [X] **`Radar::addProbe()` requires an explicit priority.**
   `src/Radar.php:29` could default `$priority = 0` for a friendlier API.
 
 - [ ] **`Radar::sortProbes()` is more verbose than necessary.**

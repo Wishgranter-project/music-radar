@@ -26,7 +26,7 @@ class Radar
      * @return self
      *   Returns itself.
      */
-    public function addProbe(ProbeInterface $probe, int $priority): Radar
+    public function addProbe(ProbeInterface $probe, int $priority = 0): Radar
     {
         $this->probes[] = new ProbeSlot($probe, $priority);
         if (count($this->probes) > 1) {
