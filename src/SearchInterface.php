@@ -39,12 +39,23 @@ interface SearchInterface
      * Sets the minimum relevance score we are aiming for in search results.
      *
      * @param int $points
-     *   The average punctuation.
+     *   The minimum score.
      *
      * @return self
      *   Returns itself.
      */
     public function setMinimumRelevanceScore(int $points): SearchInterface;
+
+    /**
+     * Sets the minimum number of adequate search results we are aiming for.
+     *
+     * @param int $count
+     *   The minimum count.
+     *
+     * @return self
+     *   Returns itself.
+     */
+    public function setMinimumRelevantResults(int $count): SearchInterface;
 
     /**
      * Deploy the probes and returns search results.

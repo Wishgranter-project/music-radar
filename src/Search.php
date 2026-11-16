@@ -32,12 +32,15 @@ class Search implements SearchInterface
      *   Criteria to judge how closely each resource matches the description.
      * @param int $minimumScore
      *   The minimum relevance score we are aiming for.
+     * @param int $minimumResults
+     *   The minimum number of relevant results we are aiming for.
      */
     public function __construct(
         protected DescriptionInterface $description,
         protected array $withProbes = [],
         protected array $criteria = [],
         protected int $minimumScore = 20,
+        protected int $minimumResults = 1,
     ) {
     }
 
@@ -65,6 +68,15 @@ class Search implements SearchInterface
     public function setMinimumRelevanceScore(int $points): SearchInterface
     {
         $this->minimumScore = $points;
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setMinimumRelevantResults(int $count): SearchInterface
+    {
+        $this->minimumResults = $count;
         return $this;
     }
 
@@ -139,6 +151,10 @@ class Search implements SearchInterface
     {
         $findings = new SearchResults();
 
+        /**
+         * Iterates through the probes, though not all probes may be deployed.
+         * If enough adequate results are found, we return earlier.
+         */
         foreach ($this->withProbes as $k => $probe) {
             $newResults = $this->deployProbe($probe);
             $findings   = $this->mergeSearchResults($findings, $newResults);
@@ -151,8 +167,8 @@ class Search implements SearchInterface
                 continue;
             }
 
-            // 1 result scoring the minimum is good enough, let's stop here.
-            if ($this->countResultsScoringAtLeast($findings, $this->minimumScore) >= 1) {
+            // We found enough results adequately matching our search, let's stop here.
+            if ($this->countResultsScoringAtLeast($findings, $this->minimumScore) >= $this->minimumResults) {
                 break;
             }
 

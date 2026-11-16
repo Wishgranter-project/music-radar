@@ -105,7 +105,7 @@ references point at the state of the code at the time of writing.
   `album`, `cover` or `genre`, so legitimate description terms can be counted as
   leftovers.
 
-- [ ] **`Search::find()` early-exit can miss better results.**
+- [X] **`Search::find()` early-exit can miss better results.**
   `src/Search.php:141-159` stops deploying lower-priority probes as soon as one
   result reaches the threshold. This is intentional, but document it; it means
   result completeness depends on probe priority.
