@@ -79,7 +79,7 @@ references point at the state of the code at the time of writing.
   property. Pick one pattern and use it consistently; as written, future
   constructor logic in `BaseCriteria` would silently not run.
 
-- [ ] **`Relevance::getTotal()` recomputes on every call.**
+- [X] **`Relevance::getTotal()` recomputes on every call.**
   `src/Sorting/Relevance.php:35-45` is called repeatedly by sorting and
   `toArray()`. Cache the sum or compute once.
 
