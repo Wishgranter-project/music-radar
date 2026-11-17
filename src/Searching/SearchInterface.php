@@ -23,7 +23,7 @@ interface SearchInterface
      * @param WishgranterProject\MusicProbe\DescriptionInterface $description
      *   Description of a music.
      *
-     * @return WishgranterProject\MusicRadar\SearchResultsInterface
+     * @return WishgranterProject\MusicRadar\Searching\SearchResultsInterface
      *   Resources that match our $description.
      */
     public function find(DescriptionInterface $description): SearchResultsInterface;
