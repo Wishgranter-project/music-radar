@@ -47,7 +47,7 @@ class Radar
      * @param null|WishgranterProject\MusicRadar\Searching\Sorting\Criteria\CriteriaInterface $criteria
      *   The criteria to sort search results.
      * @param null|WishgranterProject\MusicRadar\Searching\ResultsSatisfactionStrategyInterface $strategy
-     *   Strategy.
+     *   Strategy to decide when our search results are adequate.
      *
      * @return WishgranterProject\MusicRadar\Searching\SearchInterface
      *   New search object.
