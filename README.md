@@ -67,8 +67,8 @@ Finally we search for musics.
 
 ```php
 $resources = $radar
-    ->searchFor($description)
-    ->find();
+    ->newSearch()
+    ->find($description);
 ```
 
 <br><br>
@@ -76,22 +76,15 @@ $resources = $radar
 ## 5. Improving our results
 
 That's the basics, but the sources are fickle, depending on how unpopular our 
-music is or how popular different music with similar descriptions are, our 
-target may not be the very first in the search results, it may come second, 
-third or further down.
+music is or how popular different music with similar descriptions are, the
+result that best fit our terms may not be the very first in the search results,
+it may come second, third or further down.
 
-To solve this issue the search functionality sports a sorting algorithm to 
-place resources that better fit the description, higher in the results.
+To solve this issue the search feature sports a sorting system to place 
+resources that better fit the description higher in the results.
 
-The `::addDefaultCriteria()` method sets up a built-in pre set of criteria and 
-I find really good at sorting results.
-
-```php
-$resources = $radar
-  ->searchFor($description)
-  ->addDefaultCriteria()
-  ->find();
-```
+By default, the library uses a built-in, opinionated pre-set of criteria that I 
+find really good at sorting results.
 
 <br><br>
 
@@ -101,20 +94,23 @@ However, you can configure your own criteria if you wish.
 See the built-in criterias under `WishgranterProject\MusicRadar\Searching\Sorting\Criteria`.
 
 ```php
+use WishgranterProject\MusicRadar\Searching\Sorting\Criteria\Criteria;
 use WishgranterProject\MusicRadar\Searching\Sorting\Criteria\TitleCriterion;
 use WishgranterProject\MusicRadar\Searching\Sorting\Criteria\ArtistCriterion;
 use WishgranterProject\MusicRadar\Searching\Sorting\Criteria\UndesirableCriterion;
 
-$search = $radar->searchFor($description);
+$criteria = new Criteria();
 
 // Matching the artist in the $description weights 10 in the sorting algorithm.
-$search->addCriterion(new ArtistCriterion(10));
+$criteria->addCriterion(new ArtistCriterion(10));
 // However a matching title weights double.
-$search->addCriterion(new TitleCriterion(20));
-// And the word "live" is a deal breaker...
-$search->addCriterion(new UndesirableCriterion(-100, 'live'));
+$criteria->addCriterion(new TitleCriterion(20));
+// And the word "live" is a big no...
+$criteria->addCriterion(new UndesirableCriterion(-100, 'live'));
 
-$resources = $search->find();
+$resources = $radar
+  ->newSearch($criteria)
+  ->find($description);
 ```
 
 <br><br>
@@ -128,12 +124,11 @@ Further, if you wish to write your own criterion, you may implement the
 $weight = 10;
 $criterion = new MyNewCustomCriterion($weight);
 
-$search = $radar->searchFor($description);
+$criteria->addCriterion($criterion);
 
-// You may add multiple criteria.
-$search->addCriterion($criterion);
-
-$resources = $search->find();
+$resources = $radar
+  ->newSearch($criteria)
+  ->find($description);
 ```
 
 <br><br>
