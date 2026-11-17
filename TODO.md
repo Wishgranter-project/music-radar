@@ -1,13 +1,5 @@
 # TODO
 
-- [ ] Separation of concerns regarding `Search`.
-  - [ ] Separate the hard coded logic into a `DeployProbeStrategy::shouldContinue(SearchResults)` 
-    or something.
-  - [ ] Separate the criteria in a separated configuration object.
-  - [ ] Merge, dedupe, sort, threshold counting. Move them to `SearchResults` or
-    to a dedicated `ResultProcessor`.
-  - [ ] Scoring: `generateRelevance()` could be moved to `RelevanceCalculator` 
-    or something.
 - [ ] `ArtistCriterion` and `FeaturingCriterion`: Given a resource with 2 artists,
   should a resource featuring both artists score higher than a resource 
   featuring a single one ?
