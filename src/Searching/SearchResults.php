@@ -83,6 +83,14 @@ class SearchResults implements SearchResultsInterface, \Countable
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function sort(): void
+    {
+        usort($this->items, [$this, 'compareItems']);
+    }
+
+    /**
      * Returns the number of results.
      *
      * @return int
@@ -161,5 +169,36 @@ class SearchResults implements SearchResultsInterface, \Countable
     public function valid(): bool
     {
         return isset($this->items[$this->key()]);
+    }
+
+    /**
+     * Compare the relevance score of search result items.
+     *
+     * @param WishgranterProject\MusicRadar\Seaching\SearchResultItem $result1
+     *   Search result.
+     * @param WishgranterProject\MusicRadar\Seaching\SearchResultItem $result2
+     *   Search result.
+     *
+     * @return int
+     *   0 if equivalent.
+     *   -1 if $result1 scores higher.
+     *   1 if $result2 scores higher.
+     */
+    protected function compareItems(SearchResultItem $result1, SearchResultItem $result2): int
+    {
+        $resource1 = $result1->getResource();
+        $resource2 = $result2->getResource();
+
+        if (
+            $resource1->getId()       == $resource2->getId() &&
+            $resource1->getSourceId() == $resource2->getSourceId()
+        ) {
+            return 0;
+        }
+
+        $score1 = $result1->getRelevance()?->getTotal() ?: 0;
+        $score2 = $result2->getRelevance()?->getTotal() ?: 0;
+
+        return $score2 <=> $score1;
     }
 }

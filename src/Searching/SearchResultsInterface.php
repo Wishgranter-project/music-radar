@@ -45,6 +45,11 @@ interface SearchResultsInterface extends \Iterator
     public function withResultsMerged(SearchResultsInterface $newResults): SearchResultsInterface;
 
     /**
+     * Sort search results by comparing their relevance with each other's.
+     */
+    public function sort(): void;
+
+    /**
      * Returns an array representation of the object.
      *
      * Useful for data transfer.

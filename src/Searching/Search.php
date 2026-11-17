@@ -179,52 +179,8 @@ class Search implements SearchInterface
             // Next source it is then.
         }
 
-        $findings = $this->sortResults($findings);
+        $findings->sort();
         return $findings;
-    }
-
-    /**
-     * Sort search results by comparing their relevance with each other's.
-     *
-     * @param WishgranterProject\MusicRadar\SearchResultsInterface $searchResults
-     *   Sorted search result.
-     */
-    protected function sortResults(SearchResultsInterface $searchResults): SearchResultsInterface
-    {
-        $items = $searchResults->getItems();
-        usort($items, [$this, 'sort']);
-        return new SearchResults($items);
-    }
-
-    /**
-     * Compare the relevance score of search result items.
-     *
-     * @param WishgranterProject\MusicRadar\SearchResultItem $result1
-     *   Search result.
-     * @param WishgranterProject\MusicRadar\SearchResultItem $result2
-     *   Search result.
-     *
-     * @return int
-     *   0 if equivalent.
-     *   -1 if $result1 scores higher.
-     *   1 if $result2 scores higher.
-     */
-    protected function sort(SearchResultItem $result1, SearchResultItem $result2): int
-    {
-        $resource1 = $result1->getResource();
-        $resource2 = $result2->getResource();
-
-        if (
-            $resource1->getId()       == $resource2->getId() &&
-            $resource1->getSourceId() == $resource2->getSourceId()
-        ) {
-            return 0;
-        }
-
-        $score1 = $result1->getRelevance()?->getTotal() ?: 0;
-        $score2 = $result2->getRelevance()?->getTotal() ?: 0;
-
-        return $score2 <=> $score1;
     }
 
     /**
