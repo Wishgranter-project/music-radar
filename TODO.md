@@ -8,6 +8,9 @@
     to a dedicated `ResultProcessor`.
   - [ ] Scoring: `generateRelevance()` could be moved to `RelevanceCalculator` 
     or something.
+- [ ] `ArtistCriteria` and `FeaturingCriteria`: Given a resource with 2 artists,
+  should a resource featuring both artists score higher than a resource 
+  featuring a single one ?
 - [ ] Inconsistent magic numbers. Need to define a predictable standard for the 
   points individual criterion return. Also need one for the weights.
 - [ ] `LiveEventDateCriteria`
