@@ -161,7 +161,7 @@ class Search implements SearchInterface
          */
         foreach ($this->withProbes as $k => $probe) {
             $newResults = $this->deployProbe($probe);
-            $findings   = $this->mergeSearchResults($findings, $newResults);
+            $findings   = $findings->withResultsMerged($newResults);
             $findings   = $k > 0
                 ? $findings->withDuplicatesRemoved()
                 : $findings;
@@ -225,31 +225,6 @@ class Search implements SearchInterface
         $score2 = $result2->getRelevance()?->getTotal() ?: 0;
 
         return $score2 <=> $score1;
-    }
-
-    /**
-     * Merge multiple search results into a single object.
-     *
-     * @param array|WishgranterProject\MusicRadar\SearchResultsInterface ...$args
-     *   Results to merge.
-     *
-     * @return WishgranterProject\MusicRadar\SearchResultsInterface
-     *   The results merged.
-     */
-    protected function mergeSearchResults($args): SearchResultsInterface
-    {
-        $args = func_get_args();
-        $array = [];
-
-        foreach ($args as $arg) {
-            if ($arg instanceof SearchResultsInterface) {
-                $array = array_merge($array, $arg->getItems());
-            } else {
-                $array = array_merge($array, $arg);
-            }
-        }
-
-        return new SearchResults($array);
     }
 
     /**

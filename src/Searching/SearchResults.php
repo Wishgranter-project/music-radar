@@ -75,6 +75,14 @@ class SearchResults implements SearchResultsInterface, \Countable
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function withResultsMerged(SearchResultsInterface $newResults): SearchResultsInterface
+    {
+        return new SearchResults(array_merge($this->items, $newResults->getItems()));
+    }
+
+    /**
      * Returns the number of results.
      *
      * @return int

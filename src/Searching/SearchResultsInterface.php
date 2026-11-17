@@ -34,6 +34,17 @@ interface SearchResultsInterface extends \Iterator
     public function withDuplicatesRemoved(): SearchResultsInterface;
 
     /**
+     * Return a new set of results by merging it with another.
+     *
+     * @param WishgranterProject\MusicRadar\SearchResultsInterface $newResults
+     *   The results to be merged.
+     *
+     * @return WishgranterProject\MusicRadar\SearchResultsInterface
+     *   The new set of results.
+     */
+    public function withResultsMerged(SearchResultsInterface $newResults): SearchResultsInterface;
+
+    /**
      * Returns an array representation of the object.
      *
      * Useful for data transfer.
