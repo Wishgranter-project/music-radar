@@ -12,7 +12,7 @@ use WishgranterProject\MusicRadar\Sorting\ScoreInterface;
  * Represents a criteria to determine how close a resource matches the
  * description.
  */
-interface CriteriaInterface
+interface CriterionInterface
 {
     /**
      * Returns an unique string to identify the criteria.

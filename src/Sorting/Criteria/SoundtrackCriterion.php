@@ -14,14 +14,14 @@ use WishgranterProject\MusicProbe\Helper\Text;
  * +1 if the soundtrack can be found in the resource.
  * -1 if it cannot.
  */
-class SoundtrackCriteria extends BaseCriteria implements CriteriaInterface
+class SoundtrackCriterion extends BaseCriterion implements CriterionInterface
 {
     /**
      * {@inheritdoc}
      */
     public function getId(): string
     {
-        return 'criteria:soundtrack';
+        return 'criterion:soundtrack';
     }
 
     /**

@@ -8,12 +8,12 @@
     to a dedicated `ResultProcessor`.
   - [ ] Scoring: `generateRelevance()` could be moved to `RelevanceCalculator` 
     or something.
-- [ ] `ArtistCriteria` and `FeaturingCriteria`: Given a resource with 2 artists,
+- [ ] `ArtistCriterion` and `FeaturingCriterion`: Given a resource with 2 artists,
   should a resource featuring both artists score higher than a resource 
   featuring a single one ?
 - [ ] Inconsistent magic numbers. Need to define a predictable standard for the 
   points individual criterion return. Also need one for the weights.
-- [ ] `LiveEventDateCriteria`
+- [ ] `LiveEventDateCriterion`
   - [ ] Need to account for false positives. Some times resources include 
   copyright notices, upload dates and others that can be confused for live event
   dates.
@@ -23,7 +23,7 @@
   Add `require-dev: phpunit/phpunit`, `autoload-dev`, `phpunit.xml.dist` and a
   `scripts.test` entry.
 - [ ] **Write down unit tests.**
-- [ ] **`UndesirableCriteria`**
+- [ ] **`UndesirableCriterion`**
   - [ ] `::isTermInDescription()` is invoked for every Resource.
     And it does not even depend on the resource. Maybe move the logic to 
     `Search`, filter the terms out before the search.

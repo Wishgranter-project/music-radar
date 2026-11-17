@@ -13,14 +13,14 @@ use WishgranterProject\MusicProbe\DescriptionInterface;
  * +1 if the artist can be found in the resource's other properties.
  * -2 if the artist cannot be found.
  */
-class ArtistFeaturedCriteria extends ArtistCriteria implements CriteriaInterface
+class ArtistFeaturedCriterion extends ArtistCriterion implements CriterionInterface
 {
     /**
      * {@inheritdoc}
      */
     public function getId(): string
     {
-        return 'criteria:featured-artist';
+        return 'criterion:featured-artist';
     }
 
     protected function getRelevantName(DescriptionInterface $description)

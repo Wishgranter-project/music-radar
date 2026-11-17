@@ -7,14 +7,14 @@ namespace WishgranterProject\MusicRadar;
 use WishgranterProject\MusicProbe\DescriptionInterface;
 use WishgranterProject\MusicProbe\ResourceInterface;
 use WishgranterProject\MusicProbe\ProbeInterface;
-use WishgranterProject\MusicRadar\Sorting\Criteria\CriteriaInterface;
-use WishgranterProject\MusicRadar\Sorting\Criteria\TitleCriteria;
-use WishgranterProject\MusicRadar\Sorting\Criteria\SoundtrackCriteria;
-use WishgranterProject\MusicRadar\Sorting\Criteria\ArtistCriteria;
-use WishgranterProject\MusicRadar\Sorting\Criteria\ArtistFeaturedCriteria;
-use WishgranterProject\MusicRadar\Sorting\Criteria\UndesirableCriteria;
-use WishgranterProject\MusicRadar\Sorting\Criteria\LeftOverCriteria;
-use WishgranterProject\MusicRadar\Sorting\Criteria\LiveEventDateCriteria;
+use WishgranterProject\MusicRadar\Sorting\Criteria\CriterionInterface;
+use WishgranterProject\MusicRadar\Sorting\Criteria\TitleCriterion;
+use WishgranterProject\MusicRadar\Sorting\Criteria\SoundtrackCriterion;
+use WishgranterProject\MusicRadar\Sorting\Criteria\ArtistCriterion;
+use WishgranterProject\MusicRadar\Sorting\Criteria\ArtistFeaturedCriterion;
+use WishgranterProject\MusicRadar\Sorting\Criteria\UndesirableCriterion;
+use WishgranterProject\MusicRadar\Sorting\Criteria\LeftOverCriterion;
+use WishgranterProject\MusicRadar\Sorting\Criteria\LiveEventDateCriterion;
 use WishgranterProject\MusicRadar\Sorting\RelevanceInterface;
 use WishgranterProject\MusicRadar\Sorting\Relevance;
 
@@ -58,7 +58,7 @@ class Search implements SearchInterface
     /**
      * {@inheritdoc}
      */
-    public function addCriteria(CriteriaInterface $criteria): SearchInterface
+    public function addCriterion(CriterionInterface $criteria): SearchInterface
     {
         $this->criteria[$criteria->getId()] = $criteria;
         return $this;
@@ -96,10 +96,10 @@ class Search implements SearchInterface
         $excellent = 10;
 
         $this
-            ->addCriteria(new TitleCriteria($excellent))
-            ->addCriteria(new ArtistCriteria($excellent))
-            ->addCriteria(new ArtistFeaturedCriteria($excellent))
-            ->addCriteria(new SoundtrackCriteria($excellent));
+            ->addCriterion(new TitleCriterion($excellent))
+            ->addCriterion(new ArtistCriterion($excellent))
+            ->addCriterion(new ArtistFeaturedCriterion($excellent))
+            ->addCriterion(new SoundtrackCriterion($excellent));
 
         //------------------------------------
 
@@ -111,7 +111,7 @@ class Search implements SearchInterface
         ];
 
         $this
-            ->addCriteria(new LeftOverCriteria($couldDoWithout, $indifferentTowards));
+            ->addCriterion(new LeftOverCriterion($couldDoWithout, $indifferentTowards));
 
         //------------------------------------
 
@@ -137,13 +137,13 @@ class Search implements SearchInterface
         }
 
         foreach ($undesirables as $term => $weight) {
-            $this->addCriteria(new UndesirableCriteria($weight, $term));
+            $this->addCriterion(new UndesirableCriterion($weight, $term));
         }
 
         //------------------------------------
 
         $this
-            ->addCriteria(new LiveEventDateCriteria($absolutelyNot));
+            ->addCriterion(new LiveEventDateCriterion($absolutelyNot));
 
         return $this;
     }
@@ -327,7 +327,7 @@ class Search implements SearchInterface
      *
      * @param WishgranterProject\MusicProbe\ResourceInterface $onResource
      *   The resource to tally.
-     * @param WishgranterProject\MusicRadar\Sorting\CriteriaInterface[] $accordingToCriteria
+     * @param WishgranterProject\MusicRadar\Sorting\CriterionInterface[] $accordingToCriteria
      *   The list criteria.
      * @param WishgranterProject\MusicProbe\DescriptionInterface $andDescription
      *   The description used as the base.

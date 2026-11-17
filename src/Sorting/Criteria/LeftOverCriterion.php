@@ -13,7 +13,7 @@ use WishgranterProject\MusicProbe\ResourceInterface;
  * Substrings inside parenthesis, commas and other fluff.
  * The more there are, greater the score.
  */
-class LeftOverCriteria extends BaseCriteria implements CriteriaInterface
+class LeftOverCriterion extends BaseCriterion implements CriterionInterface
 {
     /**
      * Constructor.
@@ -36,7 +36,7 @@ class LeftOverCriteria extends BaseCriteria implements CriteriaInterface
      */
     public function getId(): string
     {
-        return 'criteria:leftover';
+        return 'criterion:leftover';
     }
 
     /**

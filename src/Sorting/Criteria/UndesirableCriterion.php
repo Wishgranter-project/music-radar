@@ -12,7 +12,7 @@ use WishgranterProject\MusicProbe\Helper\Text;
  * Scores points on the presence of specific terms.
  * The more it appears, greater the score.
  */
-class UndesirableCriteria extends BaseCriteria implements CriteriaInterface
+class UndesirableCriterion extends BaseCriterion implements CriterionInterface
 {
     /**
      * Constructor.
@@ -35,7 +35,7 @@ class UndesirableCriteria extends BaseCriteria implements CriteriaInterface
      */
     public function getId(): string
     {
-        return 'criteria:undesirable:' . $this->term;
+        return 'criterion:undesirable:' . $this->term;
     }
 
     /**

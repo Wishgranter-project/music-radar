@@ -101,18 +101,18 @@ However, you can configure your own criteria if you wish.
 See the built-in criterias under `WishgranterProject\MusicRadar\Sorting\Criteria`.
 
 ```php
-use WishgranterProject\MusicRadar\Sorting\Criteria\TitleCriteria;
-use WishgranterProject\MusicRadar\Sorting\Criteria\ArtistCriteria;
-use WishgranterProject\MusicRadar\Sorting\Criteria\UndesirableCriteria;
+use WishgranterProject\MusicRadar\Sorting\Criteria\TitleCriterion;
+use WishgranterProject\MusicRadar\Sorting\Criteria\ArtistCriterion;
+use WishgranterProject\MusicRadar\Sorting\Criteria\UndesirableCriterion;
 
 $search = $radar->searchFor($description);
 
 // Matching the artist in the $description weights 10 in the sorting algorithm.
-$search->addCriteria(new ArtistCriteria(10));
+$search->addCriterion(new ArtistCriterion(10));
 // However a matching title weights double.
-$search->addCriteria(new TitleCriteria(20));
+$search->addCriterion(new TitleCriterion(20));
 // And the word "live" is a deal breaker...
-$search->addCriteria(new UndesirableCriteria(-100, 'live'));
+$search->addCriterion(new UndesirableCriterion(-100, 'live'));
 
 $resources = $search->find();
 ```
@@ -121,17 +121,17 @@ $resources = $search->find();
 
 ### 5.75 Custom criteria
 
-Further, if you wish to write your own criteria, you may implement the 
-`WishgranterProject\MusicRadar\Sorting\Criteria\CriteriaInterface`.
+Further, if you wish to write your own criterion, you may implement the 
+`WishgranterProject\MusicRadar\Sorting\Criteria\CriterionInterface`.
 
 ```php
 $weight = 10;
-$criteria = new MyNewCustomCriteria($weight);
+$criterion = new MyNewCustomCriterion($weight);
 
 $search = $radar->searchFor($description);
 
 // You may add multiple criteria.
-$search->addCriteria($criteria);
+$search->addCriterion($criterion);
 
 $resources = $search->find();
 ```

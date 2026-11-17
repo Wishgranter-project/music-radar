@@ -16,14 +16,14 @@ use WishgranterProject\MusicProbe\Helper\Text;
  *
  * Score 1 if a date can be found.
  */
-class LiveEventDateCriteria extends BaseCriteria implements CriteriaInterface
+class LiveEventDateCriterion extends BaseCriterion implements CriterionInterface
 {
     /**
      * {@inheritdoc}
      */
     public function getId(): string
     {
-        return 'criteria:liveEventDate';
+        return 'criterion:liveEventDate';
     }
 
     /**

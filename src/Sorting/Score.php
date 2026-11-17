@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace WishgranterProject\MusicRadar\Sorting;
 
-use WishgranterProject\MusicRadar\Sorting\Criteria\CriteriaInterface;
+use WishgranterProject\MusicRadar\Sorting\Criteria\CriterionInterface;
 
 /**
  * {@inheritdoc}
@@ -14,7 +14,7 @@ class Score implements ScoreInterface
     /**
      * Constructor.
      *
-     * @param WishgranterProject\MusicRadar\Sorting\Criteria\CriteriaInterface $criteria
+     * @param WishgranterProject\MusicRadar\Sorting\Criteria\CriterionInterface $criteria
      *   The criteria used for the measurement.
      * @param int $points
      *   The points scored.
@@ -22,7 +22,7 @@ class Score implements ScoreInterface
      *   How much this score weights in the overall search.
      */
     public function __construct(
-        protected CriteriaInterface $criteria,
+        protected CriterionInterface $criteria,
         protected int $points,
         protected int $weight,
     ) {
@@ -31,7 +31,7 @@ class Score implements ScoreInterface
     /**
      * {@inheritdoc}
      */
-    public function getCriteria(): CriteriaInterface
+    public function getCriteria(): CriterionInterface
     {
         return $this->criteria;
     }

@@ -9,7 +9,7 @@ use WishgranterProject\MusicProbe\ResourceInterface;
 use WishgranterProject\MusicRadar\Sorting\ScoreInterface;
 use WishgranterProject\MusicRadar\Sorting\Score;
 
-abstract class BaseCriteria implements CriteriaInterface
+abstract class BaseCriterion implements CriterionInterface
 {
     /**
      * Constructor.
@@ -27,7 +27,7 @@ abstract class BaseCriteria implements CriteriaInterface
      */
     public function getId(): string
     {
-        return 'criteria:abstract';
+        return 'criterion:abstract';
     }
 
     /**

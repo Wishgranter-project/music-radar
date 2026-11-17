@@ -17,14 +17,14 @@ use WishgranterProject\MusicProbe\Helper\Text;
  * +1 if the artist can be found in the resource's other properties.
  * -2 if the artist cannot be found.
  */
-class ArtistCriteria extends BaseCriteria implements CriteriaInterface
+class ArtistCriterion extends BaseCriterion implements CriterionInterface
 {
     /**
      * {@inheritdoc}
      */
     public function getId(): string
     {
-        return 'criteria:artist';
+        return 'criterion:artist';
     }
 
     /**

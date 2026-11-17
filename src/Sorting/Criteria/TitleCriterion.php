@@ -13,14 +13,14 @@ use WishgranterProject\MusicProbe\ResourceInterface;
  * +1 if the title can be found in the resource's title.
  * -1 if it cannot.
  */
-class TitleCriteria extends BaseCriteria implements CriteriaInterface
+class TitleCriterion extends BaseCriterion implements CriterionInterface
 {
     /**
      * {@inheritdoc}
      */
     public function getId(): string
     {
-        return 'criteria:title';
+        return 'criterion:title';
     }
 
     /**
