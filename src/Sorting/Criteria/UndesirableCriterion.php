@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WishgranterProject\MusicRadar\Sorting\Criteria;
 
 use WishgranterProject\MusicProbe\DescriptionInterface;
@@ -10,7 +12,7 @@ use WishgranterProject\MusicProbe\Helper\Text;
  * Scores points on the presence of specific terms.
  * The more it appears, greater the score.
  */
-class UndesirableCriteria extends BaseCriteria implements CriteriaInterface
+class UndesirableCriterion extends BaseCriterion implements CriterionInterface
 {
     /**
      * Constructor.
@@ -25,6 +27,7 @@ class UndesirableCriteria extends BaseCriteria implements CriteriaInterface
         protected int $weight = -1,
         protected string $term = '',
     ) {
+        parent::__construct($weight);
     }
 
     /**
@@ -32,7 +35,7 @@ class UndesirableCriteria extends BaseCriteria implements CriteriaInterface
      */
     public function getId(): string
     {
-        return 'criteria:undesirable:' . $this->term;
+        return 'criterion:undesirable:' . $this->term;
     }
 
     /**
@@ -42,7 +45,7 @@ class UndesirableCriteria extends BaseCriteria implements CriteriaInterface
     {
         $score = 0;
 
-        // If the term actually makes part of of the description, counting it would be contraproductive.
+        // If the term actually makes part of of the description, counting it would be counterproductive.
         if ($this->isTermInDescription($this->term, $basedOnDescription)) {
             return 0;
         }
@@ -77,7 +80,19 @@ class UndesirableCriteria extends BaseCriteria implements CriteriaInterface
             return true;
         }
 
+        if ($description->getFeaturing() && Text::substrIntersect($description->getFeaturing(), $term)) {
+            return true;
+        }
+
+        if ($description->getCover() && Text::substrIntersect($description->getCover(), $term)) {
+            return true;
+        }
+
         if ($description->getSoundtrack() && Text::substrIntersect($description->getSoundtrack(), $term)) {
+            return true;
+        }
+
+        if ($description->getGenre() && Text::substrIntersect($description->getGenre(), $term)) {
             return true;
         }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WishgranterProject\MusicRadar\Sorting\Criteria;
 
 use WishgranterProject\MusicProbe\DescriptionInterface;
@@ -7,7 +9,7 @@ use WishgranterProject\MusicProbe\ResourceInterface;
 use WishgranterProject\MusicRadar\Sorting\ScoreInterface;
 use WishgranterProject\MusicRadar\Sorting\Score;
 
-abstract class BaseCriteria implements CriteriaInterface
+abstract class BaseCriterion implements CriterionInterface
 {
     /**
      * Constructor.
@@ -25,7 +27,7 @@ abstract class BaseCriteria implements CriteriaInterface
      */
     public function getId(): string
     {
-        return 'criteria:abstract';
+        return 'criterion:abstract';
     }
 
     /**
@@ -54,5 +56,33 @@ abstract class BaseCriteria implements CriteriaInterface
     protected function getPoints(ResourceInterface $forResource, DescriptionInterface $basedOnDescription): int
     {
         return 0;
+    }
+
+    /**
+     * Checks for the presence of a substring.
+     *
+     * @todo Move this to WishgranterProject\MusicProbe\Helper\Text.
+     *
+     * @param string $haystack
+     *   The string to search in.
+     * @param string|string[] $needles
+     *   The substring(s) to search for.
+     *
+     * @return bool
+     *   True if $haystack contains one or more $needles.
+     */
+    protected function containsText(string $haystack, $needles): bool
+    {
+        $needles = (array) $needles;
+
+        foreach ($needles as $needle) {
+            $pattern = '/(?<![\p{L}\p{N}_])' . preg_quote($needle, '~') . '(?![\p{L}\p{N}_])/iu';
+
+            if (preg_match($pattern, $haystack) === 1) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

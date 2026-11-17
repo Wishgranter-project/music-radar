@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WishgranterProject\MusicRadar\Sorting\Criteria;
 
 use WishgranterProject\MusicProbe\DescriptionInterface;
 use WishgranterProject\MusicProbe\ResourceInterface;
-use WishgranterProject\MusicProbe\Helper\Text;
 
 /**
  * The resource scores:
@@ -12,14 +13,14 @@ use WishgranterProject\MusicProbe\Helper\Text;
  * +1 if the title can be found in the resource's title.
  * -1 if it cannot.
  */
-class TitleCriteria extends BaseCriteria implements CriteriaInterface
+class TitleCriterion extends BaseCriterion implements CriterionInterface
 {
     /**
      * {@inheritdoc}
      */
     public function getId(): string
     {
-        return 'criteria:title';
+        return 'criterion:title';
     }
 
     /**
@@ -31,7 +32,7 @@ class TitleCriteria extends BaseCriteria implements CriteriaInterface
             return 0;
         }
 
-        return Text::substrCountArray($forResource->getTitle(), $basedOnDescription->getTitle())
+        return $this->containsText($forResource->getTitle(), $basedOnDescription->getTitle())
             ?  1
             : -1;
     }

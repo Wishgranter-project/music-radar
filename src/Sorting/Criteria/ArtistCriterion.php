@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WishgranterProject\MusicRadar\Sorting\Criteria;
 
+use Doctrine\Inflector\InflectorFactory;
+use Doctrine\Inflector\Language;
 use WishgranterProject\MusicProbe\DescriptionInterface;
 use WishgranterProject\MusicProbe\ResourceInterface;
 use WishgranterProject\MusicProbe\Helper\Text;
-use WishgranterProject\MusicRadar\Helper\English;
 
 /**
  * The resource scores:
@@ -14,14 +17,14 @@ use WishgranterProject\MusicRadar\Helper\English;
  * +1 if the artist can be found in the resource's other properties.
  * -2 if the artist cannot be found.
  */
-class ArtistCriteria extends BaseCriteria implements CriteriaInterface
+class ArtistCriterion extends BaseCriterion implements CriterionInterface
 {
     /**
      * {@inheritdoc}
      */
     public function getId(): string
     {
-        return 'criteria:artist';
+        return 'criterion:artist';
     }
 
     /**
@@ -48,9 +51,9 @@ class ArtistCriteria extends BaseCriteria implements CriteriaInterface
     /**
      * Checks if the artist's name is present in the resource.
      *
-     * @param WishgranterProject\MusicProbe\ResourceInterface
+     * @param WishgranterProject\MusicProbe\ResourceInterface $forResource
      *   The playable resource to check.
-     * @param string|array $artist
+     * @param string|string[] $artist
      *   The artist's name.
      *
      * @return int
@@ -58,14 +61,16 @@ class ArtistCriteria extends BaseCriteria implements CriteriaInterface
      */
     protected function checkForArtist(ResourceInterface $forResource, mixed $artist): int
     {
-        if ($forResource->getArtist() && Text::substrIntersect($forResource->getArtist(), $artist)) {
-            return 2;
+        foreach ($forResource->getArtist() as $art) {
+            if ($this->containsText($forResource->getArtist(), $art)) {
+                return 2;
+            }
         }
 
         // Title or description will do...
         if (
-            Text::substrIntersect($forResource->getTitle(), $artist) ||
-            Text::substrIntersect($forResource->getDescription(), $artist)
+            $this->containsText($forResource->getTitle(), $artist) ||
+            $this->containsText($forResource->getDescription(), $artist)
         ) {
             return 1;
         }
@@ -74,18 +79,18 @@ class ArtistCriteria extends BaseCriteria implements CriteriaInterface
     }
 
     /**
-     * Given a name, returns a unpluralized variation.
+     * Given a name, returns a singular variation.
      *
      * @param string|array $artist
      *   A name or array of names.
      *
      * @return string|array|null
-     *   Returns the unpluralized variation, or null if it is unable to
+     *   Returns the singular variation, or null if it is unable to
      *   generate the variation.
      */
     protected function getVariation($artist)
     {
-        $variation = $this->unpluralize($artist);
+        $variation = $this->singularize($artist);
         return $variation == $artist
             ? null
             : $variation;
@@ -100,14 +105,17 @@ class ArtistCriteria extends BaseCriteria implements CriteriaInterface
      * @return string|array
      *   The parameter now in singular.
      */
-    protected function unpluralize($strings)
+    protected function singularize($strings)
     {
+        $inflector = InflectorFactory::createForLanguage(Language::ENGLISH)
+            ->build();
+
         if (! is_array($strings)) {
-            return English::unpluralize($strings);
+            return $inflector->singularize($strings);
         }
 
         foreach ($strings as $k => $v) {
-            $strings[$k] = English::unpluralize($v);
+            $strings[$k] = $inflector->singularize($v);
         }
 
         return $strings;
@@ -123,7 +131,7 @@ class ArtistCriteria extends BaseCriteria implements CriteriaInterface
      *   The description of the music.
      *
      * @return string|array
-     *   The relevante name(s).
+     *   The relevant name(s).
      */
     protected function getRelevantName(DescriptionInterface $description)
     {

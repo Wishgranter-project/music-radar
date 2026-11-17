@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WishgranterProject\MusicRadar;
 
 use WishgranterProject\MusicProbe\ResourceInterface;
@@ -56,11 +58,13 @@ class SearchResultItem
      * @return array
      *   The object as an array.
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'resource'  => $this->resource->toArray(),
-            'relevance' => $this->relevance->toArray(),
+            'relevance' => $this->relevance
+                ? $this->relevance->toArray()
+                : null,
         ];
     }
 }

@@ -1,18 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WishgranterProject\MusicRadar;
 
 use WishgranterProject\MusicProbe\DescriptionInterface;
 use WishgranterProject\MusicProbe\ResourceInterface;
 use WishgranterProject\MusicProbe\ProbeInterface;
-use WishgranterProject\MusicRadar\Sorting\Criteria\CriteriaInterface;
-use WishgranterProject\MusicRadar\Sorting\Criteria\TitleCriteria;
-use WishgranterProject\MusicRadar\Sorting\Criteria\SoundtrackCriteria;
-use WishgranterProject\MusicRadar\Sorting\Criteria\ArtistCriteria;
-use WishgranterProject\MusicRadar\Sorting\Criteria\ArtistFeaturedCriteria;
-use WishgranterProject\MusicRadar\Sorting\Criteria\UndesirableCriteria;
-use WishgranterProject\MusicRadar\Sorting\Criteria\LeftOverCriteria;
-use WishgranterProject\MusicRadar\Sorting\Criteria\LiveEventDateCriteria;
+use WishgranterProject\MusicRadar\Sorting\Criteria\CriterionInterface;
+use WishgranterProject\MusicRadar\Sorting\Criteria\TitleCriterion;
+use WishgranterProject\MusicRadar\Sorting\Criteria\SoundtrackCriterion;
+use WishgranterProject\MusicRadar\Sorting\Criteria\ArtistCriterion;
+use WishgranterProject\MusicRadar\Sorting\Criteria\ArtistFeaturedCriterion;
+use WishgranterProject\MusicRadar\Sorting\Criteria\UndesirableCriterion;
+use WishgranterProject\MusicRadar\Sorting\Criteria\LeftOverCriterion;
+use WishgranterProject\MusicRadar\Sorting\Criteria\LiveEventDateCriterion;
 use WishgranterProject\MusicRadar\Sorting\RelevanceInterface;
 use WishgranterProject\MusicRadar\Sorting\Relevance;
 
@@ -30,14 +32,17 @@ class Search implements SearchInterface
      *   The probes we'll use to find our music.
      * @param array $criteria
      *   Criteria to judge how closely each resource matches the description.
-     * @param int $averaging
-     *   The average relevance score we are aiming for.
+     * @param int $minimumScore
+     *   The minimum relevance score we are aiming for.
+     * @param int $minimumResults
+     *   The minimum number of relevant results we are aiming for.
      */
     public function __construct(
         protected DescriptionInterface $description,
         protected array $withProbes = [],
         protected array $criteria = [],
-        protected int $averaging = 20,
+        protected int $minimumScore = 20,
+        protected int $minimumResults = 1,
     ) {
     }
 
@@ -53,7 +58,7 @@ class Search implements SearchInterface
     /**
      * {@inheritdoc}
      */
-    public function addCriteria(CriteriaInterface $criteria): SearchInterface
+    public function addCriterion(CriterionInterface $criteria): SearchInterface
     {
         $this->criteria[$criteria->getId()] = $criteria;
         return $this;
@@ -62,14 +67,23 @@ class Search implements SearchInterface
     /**
      * {@inheritdoc}
      */
-    public function setAverageRelevance(int $points): SearchInterface
+    public function setMinimumRelevanceScore(int $points): SearchInterface
     {
-        $this->averaging = $points;
+        $this->minimumScore = $points;
         return $this;
     }
 
     /**
-     * A built-in pre set of criteria to sort resources.
+     * {@inheritdoc}
+     */
+    public function setMinimumRelevantResults(int $count): SearchInterface
+    {
+        $this->minimumResults = $count;
+        return $this;
+    }
+
+    /**
+     * Adds a built-in, opinionated pre-set of criteria to sort resources.
      *
      * @return self
      *   Returns itself.
@@ -79,35 +93,38 @@ class Search implements SearchInterface
         // Weight.
         $couldDoWithout = -1;
         $absolutelyNot = -40;
-        $excelent = 10;
+        $excellent = 10;
 
         $this
-            ->addCriteria(new TitleCriteria($excelent))
-            ->addCriteria(new ArtistCriteria($excelent))
-            ->addCriteria(new ArtistFeaturedCriteria($excelent))
-            ->addCriteria(new SoundtrackCriteria($excelent));
+            ->addCriterion(new TitleCriterion($excellent))
+            ->addCriterion(new ArtistCriterion($excellent))
+            ->addCriterion(new ArtistFeaturedCriterion($excellent))
+            ->addCriterion(new SoundtrackCriterion($excellent));
 
         //------------------------------------
 
         $indifferentTowards = [
             'lyrics',
             'official lyric video',
-            'official music video'
+            'official music video',
+            'official video',
         ];
 
         $this
-            ->addCriteria(new LeftOverCriteria($couldDoWithout, $indifferentTowards));
+            ->addCriterion(new LeftOverCriterion($couldDoWithout, $indifferentTowards));
 
         //------------------------------------
 
         $undesirables = [
-            'cover'      => $couldDoWithout,
             'acoustic'   => $couldDoWithout,
             'demotape'   => $couldDoWithout,
             'demo'       => $couldDoWithout,
-            'remixed'    => $couldDoWithout,
-            'remastered' => $couldDoWithout,
             'remix'      => $couldDoWithout,
+            'remixed'    => $couldDoWithout,
+            'remaster'   => $couldDoWithout,
+            'remastered' => $couldDoWithout,
+            'tutorial'   => $absolutelyNot,
+            'cover'      => $absolutelyNot,
             'live'       => $absolutelyNot,
             'tour'       => $absolutelyNot,
             'full album' => $absolutelyNot,
@@ -120,13 +137,13 @@ class Search implements SearchInterface
         }
 
         foreach ($undesirables as $term => $weight) {
-            $this->addCriteria(new UndesirableCriteria($weight, $term));
+            $this->addCriterion(new UndesirableCriterion($weight, $term));
         }
 
         //------------------------------------
 
         $this
-            ->addCriteria(new LiveEventDateCriteria($absolutelyNot));
+            ->addCriterion(new LiveEventDateCriterion($absolutelyNot));
 
         return $this;
     }
@@ -138,6 +155,10 @@ class Search implements SearchInterface
     {
         $findings = new SearchResults();
 
+        /**
+         * Iterates through the probes, though not all probes may be deployed.
+         * If enough adequate results are found, we return earlier.
+         */
         foreach ($this->withProbes as $k => $probe) {
             $newResults = $this->deployProbe($probe);
             $findings   = $this->mergeSearchResults($findings, $newResults);
@@ -150,8 +171,8 @@ class Search implements SearchInterface
                 continue;
             }
 
-            // 1 result scoring the avarege is good enough, let's stop here.
-            if ($this->countResultsScoringAtLeast($findings, $this->averaging) >= 1) {
+            // We found enough results adequately matching our search, let's stop here.
+            if ($this->countResultsScoringAtLeast($findings, $this->minimumScore) >= $this->minimumResults) {
                 break;
             }
 
@@ -200,16 +221,10 @@ class Search implements SearchInterface
             return 0;
         }
 
-        $score1 = $result1->getRelevance()->getTotal();
-        $score2 = $result2->getRelevance()->getTotal();
+        $score1 = $result1->getRelevance()?->getTotal() ?: 0;
+        $score2 = $result2->getRelevance()?->getTotal() ?: 0;
 
-        if ($score1 == $score2) {
-            return 0;
-        }
-
-        return $score1 > $score2
-            ? -1
-            :  1;
+        return $score2 <=> $score1;
     }
 
     /**
@@ -226,9 +241,10 @@ class Search implements SearchInterface
     protected function countResultsScoringAtLeast(SearchResultsInterface $searchResults, int $minScore): int
     {
         return array_reduce($searchResults->getItems(), function ($carry, $result) use ($minScore) {
-            $carry += $result->getRelevance()->getTotal() >= $minScore ? 1 : 0;
+            $total = $result->getRelevance()?->getTotal() ?: 0;
+            $carry += $total >= $minScore ? 1 : 0;
             return $carry;
-        });
+        }, 0);
     }
 
     /**
@@ -246,7 +262,9 @@ class Search implements SearchInterface
 
         $items = $searchResults->getItems();
         foreach ($items as $item) {
-            $key = $item->getResource()->getSourceId() . ':' . $item->getResource()->getId();
+            $resource = $item->getResource();
+            $id = $resource->getId() ?: $resource->getSrc() ?: $resource->getHref() ?: $resource->getTitle();
+            $key = $item->getResource()->getSourceId() . ':' . $id;
             if (isset($uniqueArray[$key])) {
                 continue;
             }
@@ -259,8 +277,14 @@ class Search implements SearchInterface
 
     /**
      * Merge multiple search results into a single object.
+     *
+     * @param array|WishgranterProject\MusicRadar\SearchResultsInterface ...$args
+     *   Results to merge.
+     *
+     * @return WishgranterProject\MusicRadar\SearchResultsInterface
+     *   The results merged.
      */
-    protected function mergeSearchResults()
+    protected function mergeSearchResults($args): SearchResultsInterface
     {
         $args = func_get_args();
         $array = [];
@@ -303,7 +327,7 @@ class Search implements SearchInterface
      *
      * @param WishgranterProject\MusicProbe\ResourceInterface $onResource
      *   The resource to tally.
-     * @param WishgranterProject\MusicRadar\Sorting\CriteriaInterface[] $accordingToCriteria
+     * @param WishgranterProject\MusicRadar\Sorting\CriterionInterface[] $accordingToCriteria
      *   The list criteria.
      * @param WishgranterProject\MusicProbe\DescriptionInterface $andDescription
      *   The description used as the base.

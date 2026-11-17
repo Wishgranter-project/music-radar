@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WishgranterProject\MusicRadar;
 
 use WishgranterProject\MusicProbe\ProbeInterface;
 use WishgranterProject\MusicProbe\DescriptionInterface;
-use WishgranterProject\MusicRadar\SearchInterface;
 
 class Radar
 {
     /**
      * The probes we'll be deploying to find our music.
      *
-     * @var WishgranterProject\MusicProbe\ProbeSlot[]
+     * @var WishgranterProject\MusicRadar\ProbeSlot[]
      */
     protected array $probes = [];
 
@@ -26,7 +27,7 @@ class Radar
      * @return self
      *   Returns itself.
      */
-    public function addProbe(ProbeInterface $probe, int $priority): Radar
+    public function addProbe(ProbeInterface $probe, int $priority = 0): Radar
     {
         $this->probes[] = new ProbeSlot($probe, $priority);
         if (count($this->probes) > 1) {
@@ -56,17 +57,13 @@ class Radar
 
     /**
      * Sorts the probes based on their priority.
+     *
+     * In ascending order.
      */
     protected function sortProbes(): void
     {
-        usort($this->probes, function ($s1, $s2) {
-            if ($s1->priority == $s2->priority) {
-                return 0;
-            }
-
-            return $s1->priority > $s2->priority
-                ? -1
-                :  1;
+        usort($this->probes, function ($p1, $p2) {
+            return $p1->priority <=> $p2->priority;
         });
     }
 }

@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WishgranterProject\MusicRadar\Sorting;
 
-use WishgranterProject\MusicRadar\Sorting\Criteria\CriteriaInterface;
+use WishgranterProject\MusicRadar\Sorting\Criteria\CriterionInterface;
 
 /**
  * Represents how a resource compares to a description given a criteria.
@@ -12,10 +14,10 @@ interface ScoreInterface
     /**
      * Returns the criteria.
      *
-     * @return WishgranterProject\MusicRadar\Sorting\Criteria\CriteriaInterface
+     * @return WishgranterProject\MusicRadar\Sorting\Criteria\CriterionInterface
      *   The criteria.
      */
-    public function getCriteria(): CriteriaInterface;
+    public function getCriteria(): CriterionInterface;
 
     /**
      * Returns the points.

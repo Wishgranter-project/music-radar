@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WishgranterProject\MusicRadar;
 
-class SearchResults implements SearchResultsInterface
+class SearchResults implements SearchResultsInterface, \Countable
 {
     /**
      * Constructor.
@@ -57,10 +59,10 @@ class SearchResults implements SearchResultsInterface
      * @return int
      *   All points summed up.
      */
-    protected function getTotal(): int
+    public function getTotal(): int
     {
         return array_reduce($this->items, function ($carry, $result) {
-            $carry += $result->getRelevance()->getTotal();
+            $carry += $result?->getRelevance()?->getTotal() ?: 0;
             return $carry;
         }, 0);
     }
@@ -71,10 +73,10 @@ class SearchResults implements SearchResultsInterface
      * @return float
      *   The average punctuation.
      */
-    protected function getAverage(): float
+    public function getAverage(): float
     {
         $total = $this->getTotal();
-        $count = 0;
+        $count = $this->count();
 
         return $count
             ? $total / $count

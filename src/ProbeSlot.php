@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WishgranterProject\MusicRadar;
 
 use WishgranterProject\MusicProbe\ProbeInterface;
@@ -16,7 +18,7 @@ class ProbeSlot
      */
     public function __construct(
         public readonly ProbeInterface $probe,
-        public readonly int $priority,
+        public readonly int $priority = 0,
     ) {
     }
 }

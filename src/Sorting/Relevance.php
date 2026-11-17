@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WishgranterProject\MusicRadar\Sorting;
 
 /**
@@ -7,6 +9,12 @@ namespace WishgranterProject\MusicRadar\Sorting;
  */
 class Relevance implements RelevanceInterface
 {
+    /**
+     * @param int|null
+     *   Cache for relevance sum to avoid iterating over and over.
+     */
+    protected ?int $total = null;
+
     /**
      * @param WishgranterProject\MusicRadar\Sorting\ScoreInterface[]
      *   A list of scores with the points earned and weight.
@@ -19,6 +27,7 @@ class Relevance implements RelevanceInterface
     public function addScore(ScoreInterface $score): void
     {
         $this->scores[] = $score;
+        $this->total = null;
     }
 
     /**
@@ -34,6 +43,10 @@ class Relevance implements RelevanceInterface
      */
     public function getTotal(): int
     {
+        if (!is_null($this->total)) {
+            return $this->total;
+        }
+
         $count = 0;
 
         foreach ($this->scores as $score) {
@@ -41,7 +54,7 @@ class Relevance implements RelevanceInterface
             $count += $points;
         }
 
-        return $count;
+        return $this->total = $count;
     }
 
     /**

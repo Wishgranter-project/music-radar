@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WishgranterProject\MusicRadar;
 
 use WishgranterProject\MusicProbe\DescriptionInterface;
-use WishgranterProject\MusicRadar\Sorting\Criteria\CriteriaInterface;
+use WishgranterProject\MusicRadar\Sorting\Criteria\CriterionInterface;
 
 /**
  * Given the description of a music, searches for matching resources.
@@ -25,26 +27,37 @@ interface SearchInterface
     public function setDescription(DescriptionInterface $description): SearchInterface;
 
     /**
-     * Adds a criteria to sort the results.
+     * Adds a criterion to sort the results.
      *
-     * @param WishgranterProject\MusicRadar\Sorting\Criteria\CriteriaInterface $criteria
-     *   A criteria to help sort the search results.
+     * @param WishgranterProject\MusicRadar\Sorting\Criteria\CriterionInterface $criteria
+     *   A criterion to help sort the search results.
      *
      * @return self
      *   Returns itself.
      */
-    public function addCriteria(CriteriaInterface $criteria): SearchInterface;
+    public function addCriterion(CriterionInterface $criteria): SearchInterface;
 
     /**
-     * Sets the average relevance we are aiming for in search results.
+     * Sets the minimum relevance score we are aiming for in search results.
      *
      * @param int $points
-     *   The average punctuation.
+     *   The minimum score.
      *
      * @return self
      *   Returns itself.
      */
-    public function setAverageRelevance(int $points): SearchInterface;
+    public function setMinimumRelevanceScore(int $points): SearchInterface;
+
+    /**
+     * Sets the minimum number of adequate search results we are aiming for.
+     *
+     * @param int $count
+     *   The minimum count.
+     *
+     * @return self
+     *   Returns itself.
+     */
+    public function setMinimumRelevantResults(int $count): SearchInterface;
 
     /**
      * Deploy the probes and returns search results.

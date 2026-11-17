@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WishgranterProject\MusicRadar\Sorting\Criteria;
 
 use WishgranterProject\MusicProbe\DescriptionInterface;
@@ -11,7 +13,7 @@ use WishgranterProject\MusicProbe\ResourceInterface;
  * Substrings inside parenthesis, commas and other fluff.
  * The more there are, greater the score.
  */
-class LeftOverCriteria extends BaseCriteria implements CriteriaInterface
+class LeftOverCriterion extends BaseCriterion implements CriterionInterface
 {
     /**
      * Constructor.
@@ -34,7 +36,7 @@ class LeftOverCriteria extends BaseCriteria implements CriteriaInterface
      */
     public function getId(): string
     {
-        return 'criteria:leftover';
+        return 'criterion:leftover';
     }
 
     /**
@@ -50,6 +52,22 @@ class LeftOverCriteria extends BaseCriteria implements CriteriaInterface
 
         if ($basedOnDescription->getArtist()) {
             $titleMinusDescription = str_ireplace($basedOnDescription->getArtist(), '', $titleMinusDescription);
+        }
+
+        if ($basedOnDescription->getFeaturing()) {
+            $titleMinusDescription = str_ireplace($basedOnDescription->getFeaturing(), '', $titleMinusDescription);
+        }
+
+        if ($basedOnDescription->getAlbum()) {
+            $titleMinusDescription = str_ireplace($basedOnDescription->getAlbum(), '', $titleMinusDescription);
+        }
+
+        if ($basedOnDescription->getCover()) {
+            $titleMinusDescription = str_ireplace($basedOnDescription->getCover(), '', $titleMinusDescription);
+        }
+
+        if ($basedOnDescription->getGenre()) {
+            $titleMinusDescription = str_ireplace($basedOnDescription->getGenre(), '', $titleMinusDescription);
         }
 
         if ($basedOnDescription->getSoundtrack()) {

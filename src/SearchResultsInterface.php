@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WishgranterProject\MusicRadar;
 
 interface SearchResultsInterface extends \Iterator
@@ -11,14 +13,6 @@ interface SearchResultsInterface extends \Iterator
      *   Array of items.
      */
     public function getItems(): array;
-
-    /**
-     * Returns the number of results.
-     *
-     * @return int
-     *   Number of search results.
-     */
-    public function count(): int;
 
     /**
      * Returns an array representation of the object.

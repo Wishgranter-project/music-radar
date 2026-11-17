@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use AdinanCenci\FileCache\Cache;
 use WishgranterProject\MusicRadar\Radar;
 use WishgranterProject\MusicProbe\Description;
@@ -52,8 +54,8 @@ $cover      = $_GET['cover'] ?? '';
 
 $description = Description::createFromArray([
     'title'      => $title,
-    'artist'     => $artist,
-    'featuring'  => $featuring,
+    'artist'     => explode(',', $artist),
+    'featuring'  => explode(',', $featuring),
     'genre'      => $genre,
     'soundtrack' => $soundtrack,
     'cover'      => $cover
@@ -102,12 +104,11 @@ if (empty($title) || empty($artist)) {
     <li><a href="?genre=Metal&artist=Everfrost&title=Above+the+Treeline">Above the Treeline - Everfrost</a></li>
     <li><a href="?genre=Metal&artist=HammerFall&title=Crimson+Thunder">Crimson Thunder - HammerFall</a></li>
     <li><a href="?genre=Metal&artist=Leaves'+Eyes&title=Jomsborg">Jomsborg - Leaves' Eyes</a></li>
-    <li><a href="?genre=Power+Metal&artist=Beast+in+Black&title=Heart of Steel">Heart of Steel - Beast+in+Black</a></li>
+    <li><a href="?genre=Power+Metal&artist=Beast+in+Black&title=Heart of Steel">Heart of Steel - Beast in Black</a></li>
     <li><a href="?genre=Power+metal&artist=Barok&title=Nobla+Dezir">Nobla Dezir - Barok</a></li>
     <li><a href="?genre=Metal&artist=Leaves'+Eyes&title=Sacred+Vow">Sacred Vow - Leaves' Eyes</a></li>
     <li><a href="?genre=Metal&artist=Black+Sabbath&title=Iron+Man">Iron Man - Black Sabbath</a></li>
     <li><a href="?genre=Metal&artist=Gamma+ray&title=Lost+Angels">Lost Angels - Gamma ray</a></li>
-    <li><a href="?genre=Power+Metal&artist=Wonders&title=Good+&+Bad">Good & Bad - Wonders</a></li>
     <li><a href="?genre=Metal&artist=Crystal+Gates&title=Nightmares">Nightmares - Crystal Gates</a></li>
     <li><a href="?artist=Left+Hand+Solution&album=Light+Shines+Black&title=Persistence+Of+Memory&album=Light+Shines+Black">Persistence Of Memory - Left Hand Solution</a></li>
     <li><a href="?genre=Power+Metal&artist=Firewind&title=Burning+Earth">Burning Earth - Firewind</a></li>
@@ -120,6 +121,8 @@ if (empty($title) || empty($artist)) {
     <li><a href="?genre=Power+Metal&artist=Hysterica&title=Breaking+the+walls">Breaking the walls - Hysterica</a></li>
     <li><a href="?genre=Metal&artist=Davester2296&title=Painful+Dreams&cover=Robert+Prince&soundtrack=D64D2">Painful Dreams - Davester2296</a></li>
     <li><a href="?artist=Gotye&featuring=The+Basics&title=Somebody+That+I+Used+To+Know">Somebody That I Used To Know - Gotye & The Basics</a></li>
+    <li><a href="?artist=Refused,Samurai&title=Black+Dog&soundtrack=Cyberpunk 2077">Black Dog - Refused/Samurai ( Cyberpunk 2077 )</a></li>
+    <li><a href="?artist=Dead+or+Alive&title=You+spin+me+around">You spin me around - Dead or Alive</a></li>
 </ul>
 <?php
 die();

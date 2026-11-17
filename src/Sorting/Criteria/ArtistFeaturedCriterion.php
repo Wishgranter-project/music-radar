@@ -1,11 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WishgranterProject\MusicRadar\Sorting\Criteria;
 
 use WishgranterProject\MusicProbe\DescriptionInterface;
-use WishgranterProject\MusicProbe\ResourceInterface;
-use WishgranterProject\MusicProbe\Helper\Text;
-use WishgranterProject\MusicRadar\Helper\English;
 
 /**
  * The resource scores:
@@ -14,14 +13,14 @@ use WishgranterProject\MusicRadar\Helper\English;
  * +1 if the artist can be found in the resource's other properties.
  * -2 if the artist cannot be found.
  */
-class ArtistFeaturedCriteria extends ArtistCriteria implements CriteriaInterface
+class ArtistFeaturedCriterion extends ArtistCriterion implements CriterionInterface
 {
     /**
      * {@inheritdoc}
      */
     public function getId(): string
     {
-        return 'criteria:featured-artist';
+        return 'criterion:featured-artist';
     }
 
     protected function getRelevantName(DescriptionInterface $description)

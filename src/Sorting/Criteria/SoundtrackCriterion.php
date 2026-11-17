@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WishgranterProject\MusicRadar\Sorting\Criteria;
 
 use WishgranterProject\MusicProbe\DescriptionInterface;
@@ -12,14 +14,14 @@ use WishgranterProject\MusicProbe\Helper\Text;
  * +1 if the soundtrack can be found in the resource.
  * -1 if it cannot.
  */
-class SoundtrackCriteria extends BaseCriteria implements CriteriaInterface
+class SoundtrackCriterion extends BaseCriterion implements CriterionInterface
 {
     /**
      * {@inheritdoc}
      */
     public function getId(): string
     {
-        return 'criteria:soundtrack';
+        return 'criterion:soundtrack';
     }
 
     /**
@@ -31,10 +33,12 @@ class SoundtrackCriteria extends BaseCriteria implements CriteriaInterface
             return 0;
         }
 
-        foreach (['title', 'description'] as $property) {
+        foreach (['getTitle', 'getDescription'] as $property) {
+            $text = call_user_func([$forResource, $property]);
+
             if (
-                $forResource->{$property} &&
-                Text::substrCountArray($forResource->{$property}, $basedOnDescription->getSoundtrack())
+                $text &&
+                Text::substrCountArray($text, $basedOnDescription->getSoundtrack())
             ) {
                 return 1;
             }
