@@ -123,6 +123,7 @@ class Search implements SearchInterface
             'remixed'    => $couldDoWithout,
             'remaster'   => $couldDoWithout,
             'remastered' => $couldDoWithout,
+            'tutorial'   => $absolutelyNot,
             'cover'      => $absolutelyNot,
             'live'       => $absolutelyNot,
             'tour'       => $absolutelyNot,
