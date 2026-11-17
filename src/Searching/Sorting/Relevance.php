@@ -10,7 +10,7 @@ namespace WishgranterProject\MusicRadar\Searching\Sorting;
 class Relevance implements RelevanceInterface
 {
     /**
-     * @param int|null
+     * @var int|null
      *   Cache for relevance sum to avoid iterating over and over.
      */
     protected ?int $total = null;

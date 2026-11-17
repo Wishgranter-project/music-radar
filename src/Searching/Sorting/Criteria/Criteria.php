@@ -15,7 +15,8 @@ use WishgranterProject\MusicRadar\Searching\Sorting\RelevanceInterface;
 class Criteria implements CriteriaInterface
 {
     /**
-     * Array of criteria.
+     * @var WishgranterProject\MusicRadar\Searching\Sorting\Criteria\CriterionInterface[]
+     *   List of criteria.
      */
     protected array $criteria = [];
 
