@@ -45,6 +45,11 @@ class UndesirableCriterion extends BaseCriterion implements CriterionInterface
     {
         $score = 0;
 
+        // That would be counterproductive.
+        if ($this->term == 'cover' && $basedOnDescription->getCover()) {
+            return 0;
+        }
+
         // If the term actually makes part of of the description, counting it would be counterproductive.
         if ($this->isTermInDescription($this->term, $basedOnDescription)) {
             return 0;
