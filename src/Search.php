@@ -116,7 +116,6 @@ class Search implements SearchInterface
         //------------------------------------
 
         $undesirables = [
-            'cover'      => $couldDoWithout,
             'acoustic'   => $couldDoWithout,
             'demotape'   => $couldDoWithout,
             'demo'       => $couldDoWithout,
@@ -124,6 +123,7 @@ class Search implements SearchInterface
             'remixed'    => $couldDoWithout,
             'remaster'   => $couldDoWithout,
             'remastered' => $couldDoWithout,
+            'cover'      => $absolutelyNot,
             'live'       => $absolutelyNot,
             'tour'       => $absolutelyNot,
             'full album' => $absolutelyNot,
