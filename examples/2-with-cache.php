@@ -63,11 +63,8 @@ $description = Description::createFromArray([
 
 //-----------------------------------------------------------------------------
 
-$search = $probe
-    ->searchFor($description)
-    ->addDefaultCriteria();
-
-$results = $search->find();
+$search  = $probe->newSearch();
+$results = $search->find($description);
 
 //-----------------------------------------------------------------------------
 

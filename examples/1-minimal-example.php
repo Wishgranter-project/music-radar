@@ -23,8 +23,8 @@ if (file_exists('./.youtube-api-key')) {
 
 $apiYouTube = new YouTubeApi($youtubeApiKey);
 $youTube    = new YouTubeProbe($apiYouTube);
-$aether     = new Radar();
-$aether->addProbe($youTube, 1);
+$radar      = new Radar();
+$radar->addProbe($youTube, 1);
 
 //-----------------------------------------------------------------------------
 
@@ -35,10 +35,8 @@ $description = Description::createFromArray([
 
 //-----------------------------------------------------------------------------
 
-$results = $aether
-  ->searchFor($description)
-  ->addDefaultCriteria()
-  ->find();
+$search  = $radar->newSearch();
+$results = $search->find($description);
 
 
 header('Content-Type: application/json');
