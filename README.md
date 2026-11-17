@@ -31,7 +31,7 @@ $radar->addProbe($youTube, $priority);
 
 ## 3. Describing our target
 
-Next step is clearly to know what we want.
+Next step is to define what we want.
 
 ```php
 use WishgranterProject\MusicProbe\Description;
