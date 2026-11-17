@@ -20,3 +20,6 @@
     And it does not even depend on the resource. Maybe move the logic to 
     `Search`, filter the terms out before the search.
   - [ ] Need to account for word boundaries.
+- [ ] Fix documentation: `Radar::sortProbes()` sorts priorities ascending (
+  lower values deployed first), while `README.md` and the docblocks say higher 
+  priority is deployed first.
