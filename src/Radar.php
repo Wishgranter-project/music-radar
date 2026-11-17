@@ -8,7 +8,7 @@ use WishgranterProject\MusicProbe\DescriptionInterface;
 use WishgranterProject\MusicProbe\ProbeInterface;
 use WishgranterProject\MusicRadar\Searching\Search;
 use WishgranterProject\MusicRadar\Searching\SearchInterface;
-use WishgranterProject\MusicRadar\Searching\CriteriaInterface;
+use WishgranterProject\MusicRadar\Searching\Sorting\Criteria\CriteriaInterface;
 use WishgranterProject\MusicRadar\Searching\ProbeDeployStrategyInterface;
 
 class Radar
@@ -44,7 +44,7 @@ class Radar
     /**
      * Instantiate a Search object.
      *
-     * @param null|WishgranterProject\MusicRadar\Searching\CriteriaInterface $criteria
+     * @param null|WishgranterProject\MusicRadar\Searching\Sorting\Criteria\CriteriaInterface $criteria
      *   The criteria to sort search results.
      * @param null|WishgranterProject\MusicRadar\Searching\ProbeDeployStrategyInterface $strategy
      *   Strategy.
