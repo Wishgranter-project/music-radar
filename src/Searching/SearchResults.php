@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace WishgranterProject\MusicRadar\Searching;
 
-class SearchResults implements SearchResultsInterface, \Countable
+class SearchResults implements SearchResultsInterface
 {
     /**
      * Constructor.

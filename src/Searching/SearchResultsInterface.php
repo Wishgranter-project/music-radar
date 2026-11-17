@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace WishgranterProject\MusicRadar\Searching;
 
-interface SearchResultsInterface extends \Iterator
+interface SearchResultsInterface extends \Iterator, \Countable
 {
     /**
      * Returns all result items.
