@@ -54,6 +54,27 @@ class SearchResults implements SearchResultsInterface, \Countable
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function withDuplicatesRemoved(): SearchResultsInterface
+    {
+        $uniqueArray = [];
+
+        foreach ($this->items as $item) {
+            $resource = $item->getResource();
+            $id = $resource->getId() ?: $resource->getSrc() ?: $resource->getHref() ?: $resource->getTitle();
+            $key = $item->getResource()->getSourceId() . ':' . $id;
+            if (isset($uniqueArray[$key])) {
+                continue;
+            }
+
+            $uniqueArray[$key] = $item;
+        }
+
+        return new SearchResults(array_values($uniqueArray));
+    }
+
+    /**
      * Returns the number of results.
      *
      * @return int

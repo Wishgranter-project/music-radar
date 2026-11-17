@@ -26,6 +26,14 @@ interface SearchResultsInterface extends \Iterator
     public function getItemsScoringAtLeast(int $minScore): array;
 
     /**
+     * Return a new set of results with duplicates removed.
+     *
+     * @return WishgranterProject\MusicRadar\SearchResultsInterface
+     *   The new set of results.
+     */
+    public function withDuplicatesRemoved(): SearchResultsInterface;
+
+    /**
      * Returns an array representation of the object.
      *
      * Useful for data transfer.

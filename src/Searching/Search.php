@@ -163,7 +163,7 @@ class Search implements SearchInterface
             $newResults = $this->deployProbe($probe);
             $findings   = $this->mergeSearchResults($findings, $newResults);
             $findings   = $k > 0
-                ? $this->removeDuplicates($findings)
+                ? $findings->withDuplicatesRemoved()
                 : $findings;
 
             // No results, next source...
@@ -225,34 +225,6 @@ class Search implements SearchInterface
         $score2 = $result2->getRelevance()?->getTotal() ?: 0;
 
         return $score2 <=> $score1;
-    }
-
-    /**
-     * Remove duplicated results.
-     *
-     * @param WishgranterProject\MusicRadar\SearchResultsInterface $searchResults
-     *   Search results.
-     *
-     * @return WishgranterProject\MusicRadar\SearchResultsInterface
-     *   Search results with duplicated results removed.
-     */
-    protected function removeDuplicates(SearchResultsInterface $searchResults): SearchResultsInterface
-    {
-        $uniqueArray = [];
-
-        $items = $searchResults->getItems();
-        foreach ($items as $item) {
-            $resource = $item->getResource();
-            $id = $resource->getId() ?: $resource->getSrc() ?: $resource->getHref() ?: $resource->getTitle();
-            $key = $item->getResource()->getSourceId() . ':' . $id;
-            if (isset($uniqueArray[$key])) {
-                continue;
-            }
-
-            $uniqueArray[$key] = $item;
-        }
-
-        return new SearchResults(array_values($uniqueArray));
     }
 
     /**
