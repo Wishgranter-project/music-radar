@@ -28,6 +28,6 @@ class DefaultStrategy implements ProbeDeployStrategyInterface
      */
     public function areTheResultsSatisfying(SearchResultsInterface $searchResults): bool
     {
-        return $searchResults->getItemsScoringAtLeast($this->minimumScore) >= $this->minimumRelevantResults;
+        return count($searchResults->getItemsScoringAtLeast($this->minimumScore)) >= $this->minimumRelevantResults;
     }
 }
