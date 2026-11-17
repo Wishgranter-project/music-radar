@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace WishgranterProject\MusicRadar;
+namespace WishgranterProject\MusicRadar\Searching;
 
 use WishgranterProject\MusicProbe\ResourceInterface;
-use WishgranterProject\MusicRadar\Sorting\RelevanceInterface;
+use WishgranterProject\MusicRadar\Searching\Sorting\RelevanceInterface;
 
 /**
  * Represents a single search result item.
@@ -18,7 +18,7 @@ class SearchResultItem
      * @param WishgranterProject\MusicProbe\ResourceInterface $resource
      *   Represents a media resource, what we are actually after.
      *   Item essentially wraps around it.
-     * @param WishgranterProject\MusicRadar\Sorting\RelevanceInterface|null $relevance
+     * @param WishgranterProject\MusicRadar\Searching\Sorting\RelevanceInterface|null $relevance
      *   Tallies how closely $resource matches our search criteria.
      *   It will help us order search results.
      */
@@ -42,7 +42,7 @@ class SearchResultItem
     /**
      * Returns the relevance to the search.
      *
-     * @return WishgranterProject\MusicRadar\Sorting\RelevanceInterface|null
+     * @return WishgranterProject\MusicRadar\Searching\Sorting\RelevanceInterface|null
      *   The relevance.
      */
     public function getRelevance(): ?RelevanceInterface

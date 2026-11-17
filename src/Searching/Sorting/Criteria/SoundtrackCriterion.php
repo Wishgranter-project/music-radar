@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WishgranterProject\MusicRadar\Sorting\Criteria;
+namespace WishgranterProject\MusicRadar\Searching\Sorting\Criteria;
 
 use WishgranterProject\MusicProbe\DescriptionInterface;
 use WishgranterProject\MusicProbe\ResourceInterface;

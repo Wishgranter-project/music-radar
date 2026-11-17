@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WishgranterProject\MusicRadar\Sorting;
+namespace WishgranterProject\MusicRadar\Searching\Sorting;
 
 /**
  * {@inheritdoc}
@@ -16,7 +16,7 @@ class Relevance implements RelevanceInterface
     protected ?int $total = null;
 
     /**
-     * @param WishgranterProject\MusicRadar\Sorting\ScoreInterface[]
+     * @param WishgranterProject\MusicRadar\Searching\Sorting\ScoreInterface[]
      *   A list of scores with the points earned and weight.
      */
     protected array $scores = [];

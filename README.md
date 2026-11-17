@@ -98,12 +98,12 @@ $resources = $radar
 ### 5.5. Custom sorting
 
 However, you can configure your own criteria if you wish.
-See the built-in criterias under `WishgranterProject\MusicRadar\Sorting\Criteria`.
+See the built-in criterias under `WishgranterProject\MusicRadar\Searching\Sorting\Criteria`.
 
 ```php
-use WishgranterProject\MusicRadar\Sorting\Criteria\TitleCriterion;
-use WishgranterProject\MusicRadar\Sorting\Criteria\ArtistCriterion;
-use WishgranterProject\MusicRadar\Sorting\Criteria\UndesirableCriterion;
+use WishgranterProject\MusicRadar\Searching\Sorting\Criteria\TitleCriterion;
+use WishgranterProject\MusicRadar\Searching\Sorting\Criteria\ArtistCriterion;
+use WishgranterProject\MusicRadar\Searching\Sorting\Criteria\UndesirableCriterion;
 
 $search = $radar->searchFor($description);
 
@@ -122,7 +122,7 @@ $resources = $search->find();
 ### 5.75 Custom criteria
 
 Further, if you wish to write your own criterion, you may implement the 
-`WishgranterProject\MusicRadar\Sorting\Criteria\CriterionInterface`.
+`WishgranterProject\MusicRadar\Searching\Sorting\Criteria\CriterionInterface`.
 
 ```php
 $weight = 10;

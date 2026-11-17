@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace WishgranterProject\MusicRadar;
+namespace WishgranterProject\MusicRadar\Searching;
 
 use WishgranterProject\MusicProbe\DescriptionInterface;
 use WishgranterProject\MusicProbe\ResourceInterface;
 use WishgranterProject\MusicProbe\ProbeInterface;
-use WishgranterProject\MusicRadar\Sorting\Criteria\CriterionInterface;
-use WishgranterProject\MusicRadar\Sorting\Criteria\TitleCriterion;
-use WishgranterProject\MusicRadar\Sorting\Criteria\SoundtrackCriterion;
-use WishgranterProject\MusicRadar\Sorting\Criteria\ArtistCriterion;
-use WishgranterProject\MusicRadar\Sorting\Criteria\ArtistFeaturedCriterion;
-use WishgranterProject\MusicRadar\Sorting\Criteria\UndesirableCriterion;
-use WishgranterProject\MusicRadar\Sorting\Criteria\LeftOverCriterion;
-use WishgranterProject\MusicRadar\Sorting\Criteria\LiveEventDateCriterion;
-use WishgranterProject\MusicRadar\Sorting\RelevanceInterface;
-use WishgranterProject\MusicRadar\Sorting\Relevance;
+use WishgranterProject\MusicRadar\Searching\Sorting\Criteria\CriterionInterface;
+use WishgranterProject\MusicRadar\Searching\Sorting\Criteria\TitleCriterion;
+use WishgranterProject\MusicRadar\Searching\Sorting\Criteria\SoundtrackCriterion;
+use WishgranterProject\MusicRadar\Searching\Sorting\Criteria\ArtistCriterion;
+use WishgranterProject\MusicRadar\Searching\Sorting\Criteria\ArtistFeaturedCriterion;
+use WishgranterProject\MusicRadar\Searching\Sorting\Criteria\UndesirableCriterion;
+use WishgranterProject\MusicRadar\Searching\Sorting\Criteria\LeftOverCriterion;
+use WishgranterProject\MusicRadar\Searching\Sorting\Criteria\LiveEventDateCriterion;
+use WishgranterProject\MusicRadar\Searching\Sorting\RelevanceInterface;
+use WishgranterProject\MusicRadar\Searching\Sorting\Relevance;
 
 /**
  * {@inheritdoc}
@@ -327,12 +327,12 @@ class Search implements SearchInterface
      *
      * @param WishgranterProject\MusicProbe\ResourceInterface $onResource
      *   The resource to tally.
-     * @param WishgranterProject\MusicRadar\Sorting\CriterionInterface[] $accordingToCriteria
+     * @param WishgranterProject\MusicRadar\Searching\Sorting\CriterionInterface[] $accordingToCriteria
      *   The list criteria.
      * @param WishgranterProject\MusicProbe\DescriptionInterface $andDescription
      *   The description used as the base.
      *
-     * @return WishgranterProject\MusicRadar\Sorting\RelevanceInterface
+     * @return WishgranterProject\MusicRadar\Searching\Sorting\RelevanceInterface
      *   The relevance scored by the resource.
      */
     protected function generateRelevance(

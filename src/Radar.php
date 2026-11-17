@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace WishgranterProject\MusicRadar;
 
-use WishgranterProject\MusicProbe\ProbeInterface;
 use WishgranterProject\MusicProbe\DescriptionInterface;
+use WishgranterProject\MusicProbe\ProbeInterface;
+use WishgranterProject\MusicRadar\Searching\Search;
+use WishgranterProject\MusicRadar\Searching\SearchInterface;
 
 class Radar
 {
@@ -43,7 +45,7 @@ class Radar
      * @param WishgranterProject\MusicProbe\DescriptionInterface $description
      *   The description of a music.
      *
-     * @return WishgranterProject\MusicRadar\SearchInterface
+     * @return WishgranterProject\MusicRadar\Searching\SearchInterface
      *   The new search object.
      */
     public function searchFor(DescriptionInterface $description): SearchInterface

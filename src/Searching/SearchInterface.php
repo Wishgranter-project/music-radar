@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace WishgranterProject\MusicRadar;
+namespace WishgranterProject\MusicRadar\Searching;
 
 use WishgranterProject\MusicProbe\DescriptionInterface;
-use WishgranterProject\MusicRadar\Sorting\Criteria\CriterionInterface;
+use WishgranterProject\MusicRadar\Searching\Sorting\Criteria\CriterionInterface;
 
 /**
  * Given the description of a music, searches for matching resources.
@@ -29,7 +29,7 @@ interface SearchInterface
     /**
      * Adds a criterion to sort the results.
      *
-     * @param WishgranterProject\MusicRadar\Sorting\Criteria\CriterionInterface $criteria
+     * @param WishgranterProject\MusicRadar\Searching\Sorting\Criteria\CriterionInterface $criteria
      *   A criterion to help sort the search results.
      *
      * @return self

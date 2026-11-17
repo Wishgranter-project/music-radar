@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WishgranterProject\MusicRadar;
+namespace WishgranterProject\MusicRadar\Searching;
 
 interface SearchResultsInterface extends \Iterator
 {
