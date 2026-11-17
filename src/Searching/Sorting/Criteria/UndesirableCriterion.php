@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WishgranterProject\MusicRadar\Sorting\Criteria;
+namespace WishgranterProject\MusicRadar\Searching\Sorting\Criteria;
 
 use WishgranterProject\MusicProbe\DescriptionInterface;
 use WishgranterProject\MusicProbe\ResourceInterface;
@@ -44,6 +44,11 @@ class UndesirableCriterion extends BaseCriterion implements CriterionInterface
     protected function getPoints(ResourceInterface $forResource, DescriptionInterface $basedOnDescription): int
     {
         $score = 0;
+
+        // That would be counterproductive.
+        if ($this->term == 'cover' && $basedOnDescription->getCover()) {
+            return 0;
+        }
 
         // If the term actually makes part of of the description, counting it would be counterproductive.
         if ($this->isTermInDescription($this->term, $basedOnDescription)) {

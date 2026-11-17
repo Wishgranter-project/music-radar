@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace WishgranterProject\MusicRadar;
 
-use WishgranterProject\MusicProbe\ProbeInterface;
 use WishgranterProject\MusicProbe\DescriptionInterface;
+use WishgranterProject\MusicProbe\ProbeInterface;
+use WishgranterProject\MusicRadar\Searching\Search;
+use WishgranterProject\MusicRadar\Searching\SearchInterface;
+use WishgranterProject\MusicRadar\Searching\Sorting\Criteria\CriteriaInterface;
+use WishgranterProject\MusicRadar\Searching\ResultsSatisfactionStrategyInterface;
 
 class Radar
 {
@@ -40,19 +44,23 @@ class Radar
     /**
      * Instantiate a Search object.
      *
-     * @param WishgranterProject\MusicProbe\DescriptionInterface $description
-     *   The description of a music.
+     * @param null|WishgranterProject\MusicRadar\Searching\Sorting\Criteria\CriteriaInterface $criteria
+     *   The criteria to sort search results.
+     * @param null|WishgranterProject\MusicRadar\Searching\ResultsSatisfactionStrategyInterface $strategy
+     *   Strategy to decide when our search results are adequate.
      *
-     * @return WishgranterProject\MusicRadar\SearchInterface
-     *   The new search object.
+     * @return WishgranterProject\MusicRadar\Searching\SearchInterface
+     *   New search object.
      */
-    public function searchFor(DescriptionInterface $description): SearchInterface
-    {
+    public function newSearch(
+        ?CriteriaInterface $criteria = null,
+        ?ResultsSatisfactionStrategyInterface $strategy = null,
+    ): SearchInterface {
         $probes = array_map(function ($slot) {
             return $slot->probe;
         }, $this->probes);
 
-        return new Search($description, $probes);
+        return new Search($probes, $criteria, $strategy);
     }
 
     /**

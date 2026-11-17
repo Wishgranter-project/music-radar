@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace WishgranterProject\MusicRadar\Sorting;
+namespace WishgranterProject\MusicRadar\Searching\Sorting;
 
-use WishgranterProject\MusicRadar\Sorting\Criteria\CriterionInterface;
+use WishgranterProject\MusicRadar\Searching\Sorting\Criteria\CriterionInterface;
 
 /**
  * Represents how a resource compares to a description given a criteria.
@@ -14,7 +14,7 @@ interface ScoreInterface
     /**
      * Returns the criteria.
      *
-     * @return WishgranterProject\MusicRadar\Sorting\Criteria\CriterionInterface
+     * @return WishgranterProject\MusicRadar\Searching\Sorting\Criteria\CriterionInterface
      *   The criteria.
      */
     public function getCriteria(): CriterionInterface;

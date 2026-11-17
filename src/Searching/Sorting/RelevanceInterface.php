@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WishgranterProject\MusicRadar\Sorting;
+namespace WishgranterProject\MusicRadar\Searching\Sorting;
 
 /**
  * Represents how relevant an individual result is to the search.
@@ -12,7 +12,7 @@ interface RelevanceInterface
     /**
      * Adds a score to the relevance.
      *
-     * @var WishgranterProject\MusicRadar\Sorting\ScoreInterface $score
+     * @var WishgranterProject\MusicRadar\Searching\Sorting\ScoreInterface $score
      *   The new score.
      */
     public function addScore(ScoreInterface $score): void;
@@ -20,7 +20,7 @@ interface RelevanceInterface
     /**
      * Returns the scores.
      *
-     * @return WishgranterProject\MusicRadar\Sorting\ScoreInterface[]
+     * @return WishgranterProject\MusicRadar\Searching\Sorting\ScoreInterface[]
      *   The scores.
      */
     public function getScores(): array;

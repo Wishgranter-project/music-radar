@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace WishgranterProject\MusicRadar\Sorting;
+namespace WishgranterProject\MusicRadar\Searching\Sorting;
 
-use WishgranterProject\MusicRadar\Sorting\Criteria\CriterionInterface;
+use WishgranterProject\MusicRadar\Searching\Sorting\Criteria\CriterionInterface;
 
 /**
  * {@inheritdoc}
@@ -14,7 +14,7 @@ class Score implements ScoreInterface
     /**
      * Constructor.
      *
-     * @param WishgranterProject\MusicRadar\Sorting\Criteria\CriterionInterface $criteria
+     * @param WishgranterProject\MusicRadar\Searching\Sorting\Criteria\CriterionInterface $criteria
      *   The criteria used for the measurement.
      * @param int $points
      *   The points scored.

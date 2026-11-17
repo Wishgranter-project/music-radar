@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace WishgranterProject\MusicRadar\Sorting\Criteria;
+namespace WishgranterProject\MusicRadar\Searching\Sorting\Criteria;
 
 use WishgranterProject\MusicProbe\DescriptionInterface;
 use WishgranterProject\MusicProbe\ResourceInterface;
-use WishgranterProject\MusicRadar\Sorting\ScoreInterface;
-use WishgranterProject\MusicRadar\Sorting\Score;
+use WishgranterProject\MusicRadar\Searching\Sorting\ScoreInterface;
+use WishgranterProject\MusicRadar\Searching\Sorting\Score;
 
 abstract class BaseCriterion implements CriterionInterface
 {

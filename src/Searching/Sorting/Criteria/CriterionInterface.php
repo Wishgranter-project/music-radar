@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace WishgranterProject\MusicRadar\Sorting\Criteria;
+namespace WishgranterProject\MusicRadar\Searching\Sorting\Criteria;
 
 use WishgranterProject\MusicProbe\DescriptionInterface;
 use WishgranterProject\MusicProbe\ResourceInterface;
-use WishgranterProject\MusicRadar\Sorting\ScoreInterface;
+use WishgranterProject\MusicRadar\Searching\Sorting\ScoreInterface;
 
 /**
  * Represents a criteria to determine how close a resource matches the
@@ -39,7 +39,7 @@ interface CriterionInterface
      * @param WishgranterProject\MusicProbe\DescriptionInterface $basedOnDescription
      *   The description used as a base.
      *
-     * @return WishgranterProject\MusicRadar\Sorting\ScoreInterface
+     * @return WishgranterProject\MusicRadar\Searching\Sorting\ScoreInterface
      *   A score object.
      */
     public function getScore(ResourceInterface $forResource, DescriptionInterface $basedOnDescription): ScoreInterface;
