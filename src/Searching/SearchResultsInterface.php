@@ -15,6 +15,17 @@ interface SearchResultsInterface extends \Iterator
     public function getItems(): array;
 
     /**
+     * Returns results that scored $minScore or more.
+     *
+     * @param int $minScore
+     *   Minimum score.
+     *
+     * @return WishgranterProject\MusicRadar\SearchResultItem[]
+     *   Array of matching items.
+     */
+    public function getItemsScoringAtLeast(int $minScore): array;
+
+    /**
      * Returns an array representation of the object.
      *
      * Useful for data transfer.

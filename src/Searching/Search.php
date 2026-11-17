@@ -172,7 +172,7 @@ class Search implements SearchInterface
             }
 
             // We found enough results adequately matching our search, let's stop here.
-            if ($this->countResultsScoringAtLeast($findings, $this->minimumScore) >= $this->minimumResults) {
+            if (count($findings->getItemsScoringAtLeast($this->minimumScore)) >= $this->minimumResults) {
                 break;
             }
 
@@ -225,26 +225,6 @@ class Search implements SearchInterface
         $score2 = $result2->getRelevance()?->getTotal() ?: 0;
 
         return $score2 <=> $score1;
-    }
-
-    /**
-     * Returns the number of results that scored $minScore or more.
-     *
-     * @param int $minScore
-     *   Minimum score.
-     * @param WishgranterProject\MusicRadar\SearchResultsInterface $searchResults
-     *   Search results.
-     *
-     * @return int
-     *   Number of matching results.
-     */
-    protected function countResultsScoringAtLeast(SearchResultsInterface $searchResults, int $minScore): int
-    {
-        return array_reduce($searchResults->getItems(), function ($carry, $result) use ($minScore) {
-            $total = $result->getRelevance()?->getTotal() ?: 0;
-            $carry += $total >= $minScore ? 1 : 0;
-            return $carry;
-        }, 0);
     }
 
     /**

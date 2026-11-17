@@ -43,6 +43,17 @@ class SearchResults implements SearchResultsInterface, \Countable
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getItemsScoringAtLeast(int $minScore): array
+    {
+        return array_filter($this->items, function ($result) use ($minScore) {
+            $total = $result->getRelevance()?->getTotal() ?: 0;
+            return $total >= $minScore;
+        });
+    }
+
+    /**
      * Returns the number of results.
      *
      * @return int
