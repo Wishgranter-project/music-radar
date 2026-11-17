@@ -13,7 +13,7 @@ $radar = new Radar();
 
 ## 2. Add probes
 
-Let's use one for YouTube as an example.
+Let's use [one for YouTube](https://github.com/Wishgranter-project/youtube-probe) as an example.
 
 ```php
 use WishgranterProject\YouTubeProbe\YouTubeApi;
@@ -91,7 +91,7 @@ find really good at sorting results.
 ### 5.5. Custom sorting
 
 However, you can configure your own criteria if you wish.
-See the built-in criterias under `WishgranterProject\MusicRadar\Searching\Sorting\Criteria`.
+See the built-in criteria under `WishgranterProject\MusicRadar\Searching\Sorting\Criteria`.
 
 ```php
 use WishgranterProject\MusicRadar\Searching\Sorting\Criteria\Criteria;
