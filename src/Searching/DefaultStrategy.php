@@ -7,7 +7,7 @@ namespace WishgranterProject\MusicRadar\Searching;
 /**
  * {@inheritdoc}
  */
-class DefaultStrategy implements ProbeDeployStrategyInterface
+class DefaultStrategy implements ResultsSatisfactionStrategyInterface
 {
     /**
      * Constructor.

@@ -7,7 +7,7 @@ namespace WishgranterProject\MusicRadar\Searching;
 /**
  * Defines a strategy to decide when search results are adequate.
  */
-interface ProbeDeployStrategyInterface
+interface ResultsSatisfactionStrategyInterface
 {
     /**
      * Checks if the current search results are satisfying.

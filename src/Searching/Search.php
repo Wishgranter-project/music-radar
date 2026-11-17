@@ -21,13 +21,13 @@ class Search implements SearchInterface
      *   The probes we'll use to find our music.
      * @param null|WishgranterProject\MusicRadar\Searching\Sorting\Criteria\CriteriaInterface $criteria
      *   The criteria to sort search results.
-     * @param null|WishgranterProject\MusicRadar\Searching\ProbeDeployStrategyInterface $strategy
-     *   Strategy.
+     * @param null|WishgranterProject\MusicRadar\Searching\ResultsSatisfactionStrategyInterface $strategy
+     *   Strategy to decide when our search results are adequate.
      */
     public function __construct(
         protected array $withProbes = [],
         protected ?CriteriaInterface $criteria = null,
-        protected ?ProbeDeployStrategyInterface $strategy = null,
+        protected ?ResultsSatisfactionStrategyInterface $strategy = null,
     ) {
         $this->criteria = $criteria
             ? $criteria

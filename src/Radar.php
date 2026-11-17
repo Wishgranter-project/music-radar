@@ -9,7 +9,7 @@ use WishgranterProject\MusicProbe\ProbeInterface;
 use WishgranterProject\MusicRadar\Searching\Search;
 use WishgranterProject\MusicRadar\Searching\SearchInterface;
 use WishgranterProject\MusicRadar\Searching\Sorting\Criteria\CriteriaInterface;
-use WishgranterProject\MusicRadar\Searching\ProbeDeployStrategyInterface;
+use WishgranterProject\MusicRadar\Searching\ResultsSatisfactionStrategyInterface;
 
 class Radar
 {
@@ -46,7 +46,7 @@ class Radar
      *
      * @param null|WishgranterProject\MusicRadar\Searching\Sorting\Criteria\CriteriaInterface $criteria
      *   The criteria to sort search results.
-     * @param null|WishgranterProject\MusicRadar\Searching\ProbeDeployStrategyInterface $strategy
+     * @param null|WishgranterProject\MusicRadar\Searching\ResultsSatisfactionStrategyInterface $strategy
      *   Strategy.
      *
      * @return WishgranterProject\MusicRadar\Searching\SearchInterface
@@ -54,7 +54,7 @@ class Radar
      */
     public function newSearch(
         ?CriteriaInterface $criteria = null,
-        ?ProbeDeployStrategyInterface $strategy = null,
+        ?ResultsSatisfactionStrategyInterface $strategy = null,
     ): SearchInterface {
         $probes = array_map(function ($slot) {
             return $slot->probe;
