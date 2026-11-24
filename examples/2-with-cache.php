@@ -40,8 +40,8 @@ $youTube    = new YouTubeProbe($youtubeApi);
 $localFiles = new LocalFilesProbe(rtrim($_SERVER['DOCUMENT_ROOT'], '/') . '/local_files/', 'https://' . $_SERVER['HTTP_HOST'] . '/local_files/');
 
 $probe     = new Radar();
-$probe->addProbe($localFiles, 2);
-$probe->addProbe($youTube, 1);
+$probe->addProbe($youTube, 10);
+$probe->addProbe($localFiles, 20);
 
 //-----------------------------------------------------------------------------
 
