@@ -6,18 +6,46 @@ namespace WishgranterProject\MusicRadar\Searching\Sorting\Criteria;
 
 use WishgranterProject\MusicProbe\DescriptionInterface;
 use WishgranterProject\MusicProbe\ResourceInterface;
-use WishgranterProject\MusicProbe\Helper\Text;
 
 /**
  * Live performances are undesirable.
  *
  * Most of the time, live recordings will feature the word "live", but other
- * times they instead feature a date.
+ * times they instead feature a date and maybe a location.
  *
- * Score 1 if a date can be found.
+ * Score 1 if a date can be found, ignoring copyright and release notices that
+ * would otherwise be mistaken for one.
  */
 class LiveEventDateCriterion extends BaseCriterion implements CriterionInterface
 {
+    /**
+     * Pattenr to match month names.
+     *
+     * @var string
+     */
+    protected const MONTH_NAMES = '(?:January|February|March|April|May|June|July|August|September|October|November|December)';
+
+    /**
+     * Regex to match years.
+     *
+     * @var string
+     */
+    protected const YEAR = '(?:19|20)\d{2}';
+
+    /**
+     * Regex to match dates.
+     *
+     * Multi alternative patterns.
+     *
+     * @var string
+     */
+    protected const DATE = '(?:' .
+        '(?:19|20)\d{2}[-/.]\d{1,2}[-/.]\d{1,2}|' .
+        '\d{1,2}[-/.]\d{1,2}[-/.](?:19|20)\d{2}|' .
+        self::MONTH_NAMES . '\s+\d{1,2}(?:st|nd|rd|th)?,?\s+' . self::YEAR . '|' .
+        '\d{1,2}(?:st|nd|rd|th)?\s+(?:of\s+)?' . self::MONTH_NAMES . ',?\s+' . self::YEAR .
+    ')';
+
     /**
      * {@inheritdoc}
      */
@@ -50,14 +78,31 @@ class LiveEventDateCriterion extends BaseCriterion implements CriterionInterface
      * @return string[]
      *   Array of regex patterns.
      */
-    protected function getDateRegexPatterns()
+    protected function getDateRegexPatterns(): array
     {
         return [
-            '#(January|February|March|April|May|June|July|August|September|October|November|December)#',
-            '#[\d]+(st|th|nd|rd)#',
-            '#\d+[/.-]\d+[/.-]\d+#',
-            '#19\d{2}#',
-            '#20\d{2}#',
+            '#\b' . self::DATE . '\b#i',
+        ];
+    }
+
+    /**
+     * Retrieves the patterns of notices whose dates are not live event dates.
+     *
+     * Copyright notices, release dates, etc.
+     *
+     * @return string[]
+     *   Array of regex patterns.
+     */
+    protected function getFalsePositivePatterns(): array
+    {
+        return [
+            '#℗\s*' . self::YEAR . '\b#',
+            '#(?:©|copyright)\s*' . self::YEAR . '(?:\s*[-–—]\s*' . self::YEAR . ')?\b#i',
+            '#\ball\s+rights\s+reserved\b#i',
+            '#\b(?:released|release|published|publication|uploaded|upload|available|made|posted)\b[^\d]{0,20}?' . self::DATE . '\b#i',
+            '#\bout\s+(?:on\s+|worldwide\s+)*' . self::DATE . '\b#i',
+            '#\bout\b[^\d]{0,25}?' . self::MONTH_NAMES . '\s+\d{1,2}(?:st|nd|rd|th)?,?\s+' . self::YEAR . '\b#i',
+            '#\b(?:album|ep|single)\b[^\n()]{0,40}?\(\s*[^()]{0,30}?' . self::DATE . '\s*\)#i',
         ];
     }
 
@@ -72,30 +117,26 @@ class LiveEventDateCriterion extends BaseCriterion implements CriterionInterface
      * @return string[]
      *   Array of matching strings.
      */
-    protected function getResourceMatches(array $patterns, ResourceInterface $resource)
+    protected function getResourceMatches(array $patterns, ResourceInterface $resource): array
     {
         $results = [];
 
-        $title       = $resource->getTitle();
-        $artist      = $resource->getArtist();
-        $album       = $resource->getAlbum();
-        $description = $resource->getDescription();
+        $fields = array_filter([
+            $resource->getTitle(),
+            $resource->getArtist(),
+            $resource->getAlbum(),
+            $resource->getDescription(),
+        ]);
+
+        foreach ($fields as &$field) {
+            $this->stripFalsePositives($field);
+        }
 
         foreach ($patterns as $pattern) {
-            if ($title && $this->pregMatchAllAndStrip($pattern, $title, $matches)) {
-                $results = array_merge($results, $matches);
-            }
-
-            if ($artist && $this->pregMatchAllAndStrip($pattern, $artist, $matches)) {
-                $results = array_merge($results, $matches);
-            }
-
-            if ($album && $this->pregMatchAllAndStrip($pattern, $album, $matches)) {
-                $results = array_merge($results, $matches);
-            }
-
-            if ($description && $this->pregMatchAllAndStrip($pattern, $description, $matches)) {
-                $results = array_merge($results, $matches);
+            foreach ($fields as &$field) {
+                if ($this->pregMatchAllAndStrip($pattern, $field, $matches)) {
+                    $results = array_merge($results, $matches);
+                }
             }
         }
 
@@ -113,25 +154,23 @@ class LiveEventDateCriterion extends BaseCriterion implements CriterionInterface
      * @return string[]
      *   Array of matching strings.
      */
-    protected function getDescriptionMatches(array $patterns, DescriptionInterface $description)
+    protected function getDescriptionMatches(array $patterns, DescriptionInterface $description): array
     {
         $results = [];
 
-        $title      = $description->getTitle();
-        $artist     = $description->getArtist();
-        $soundtrack = $description->getSoundtrack();
+        $fields = array_filter([
+            $description->getTitle(),
+            $description->getArtist(),
+            $description->getFeaturing(),
+            $description->getCover(),
+            $description->getSoundtrack(),
+        ]);
 
         foreach ($patterns as $pattern) {
-            if ($title && $this->pregMatchAllAndStrip($pattern, $title, $matches)) {
-                $results = array_merge($results, $matches);
-            }
-
-            if ($artist && $this->pregMatchAllAndStrip($pattern, $artist, $matches)) {
-                $results = array_merge($results, $matches);
-            }
-
-            if ($soundtrack && $this->pregMatchAllAndStrip($pattern, $soundtrack, $matches)) {
-                $results = array_merge($results, $matches);
+            foreach ($fields as &$field) {
+                if ($this->pregMatchAllAndStrip($pattern, $field, $matches)) {
+                    $results = array_merge($results, $matches);
+                }
             }
         }
 
@@ -139,7 +178,24 @@ class LiveEventDateCriterion extends BaseCriterion implements CriterionInterface
     }
 
     /**
-     * Perform global regular expression matches.
+     * Removes possible false positives from a string.
+     *
+     * Copyright notices, release dates etc.
+     *
+     * @param string|string[] $subject
+     *   The string(s) to clean up, passed by reference.
+     *
+     * @return void
+     */
+    protected function stripFalsePositives(string|array &$subject): void
+    {
+        foreach ($this->getFalsePositivePatterns() as $pattern) {
+            $subject = preg_replace($pattern, '', $subject) ?? $subject;
+        }
+    }
+
+    /**
+     * Perform global regular expression matches and remove them.
      *
      * @param string $pattern
      *   The pattern to search for, as a string.
@@ -148,8 +204,8 @@ class LiveEventDateCriterion extends BaseCriterion implements CriterionInterface
      * @param array $matches
      *   Array of matching sub-strings.
      *
-     * @return array
-     *   True if the pattern matche the subject(s).
+     * @return bool
+     *   True if the pattern matched one of the subject(s).
      */
     protected function pregMatchAllAndStrip(string $pattern, &$subjects, &$matches): bool
     {
