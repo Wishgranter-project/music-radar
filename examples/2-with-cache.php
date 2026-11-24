@@ -81,7 +81,7 @@ require 'head.html';
     <input type="submit" value="Search" />
 </form>
 <?php
-if (empty($title) || empty($artist)) {
+if (empty($title) && empty($artist) && empty($featuring) && empty($genre) && empty($soundtrack) && empty($cover)) {
 ?>
 <ul>
     <li><a href="?title=Stolen waters&artist=Cain's Offering">Stolen waters - Cain's Offering</a></li>
@@ -153,8 +153,6 @@ foreach ($results as $result) {
 
             $table .= $img;
         }
-
-        $table .= '<br>' . $resource->getSourceId();
 
     $table .=
         '</td>
